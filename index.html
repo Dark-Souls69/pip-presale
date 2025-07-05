@@ -6,6 +6,9 @@
   <title>🌾 Paws In Peace (PIP) Presale</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/web3modal"></script>
+  <script src="https://unpkg.com/@walletconnect/web3-provider"></script>
+  <script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -67,6 +70,30 @@
       color: #555;
     }
 
+    .progress-container {
+      background: #eee;
+      border-radius: 6px;
+      overflow: hidden;
+      height: 24px;
+      margin-top: 10px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #6f42c1;
+      width: 35%;
+      color: white;
+      text-align: center;
+      line-height: 24px;
+      font-size: 14px;
+    }
+
+    .countdown {
+      font-weight: bold;
+      font-size: 18px;
+      color: #c42e4d;
+    }
+
     @media (max-width: 600px) {
       .container {
         padding: 20px 10px;
@@ -81,86 +108,103 @@
 
 <body>
   <div class="container">
-    <h1>🌾 Paws In Peace (PIP) Presale Landing Page</h1>
-    <h2>Join the $PIP Presale</h2>
-    <p>Invest in compassionate, blockchain-powered pet aftercare services. PIP isn’t just a token — it’s a movement to give every pet a respectful farewell.</p>
+    <div class="section">
+      <h2>📉 Presale Progress</h2>
+      <p>Phase 1: 15% bonus — $0.001 USD per token — <strong>Live Now</strong></p>
+      <div class="progress-container">
+        <div class="progress-bar">35% Sold</div>
+      </div>
+    </div>
 
     <div class="section">
-      <h3>🔥 Presale Phases</h3>
+      <h2>⏱️ Presale Ends In</h2>
+      <p class="countdown" id="countdown">Loading...</p>
+    </div>
+
+    <div class="section">
+      <h2>🔍 FAQ</h2>
       <ul>
-        <li><strong>Phase 1</strong>: 15% bonus — <b>$0.001 USD</b> per token — ✅ <b>Live Now</b></li>
-        <li><strong>Phase 2</strong>: 10% bonus — $0.0012 USD per token</li>
-        <li><strong>Phase 3</strong>: 5% bonus — $0.0015 USD per token</li>
+        <li><strong>What is PIP?</strong> Paws In Peace ($PIP) is a utility token supporting blockchain-powered pet aftercare.</li>
+        <li><strong>How can I participate?</strong> Connect a wallet (e.g., MetaMask, Trust Wallet) and purchase with ETH or USDT.</li>
+        <li><strong>What bonuses are available?</strong> Up to 15% bonus during Phase 1, decreasing in later phases.</li>
+        <li><strong>What can I use PIP for?</strong> Pet cremation discounts, staking, donations, and future DAO voting rights.</li>
       </ul>
-      <p>Accepted: <strong>USDT, ETH, MATIC</strong></p>
     </div>
 
     <div class="section">
-      <h3>🍱 Early Holder Benefits</h3>
+      <h2>🙏 Donate</h2>
+      <p>Support our mission! Choose your donation method:</p>
       <ul>
-        <li>Hold <b>5,000+ PIP</b>: Get <b>2 full cremation services free</b></li>
-        <li>Hold <b>25,000+ PIP</b>: Unlock <b>lifetime cremation coverage</b></li>
+        <li><strong>Crypto:</strong> Send any amount to 0xa1488aBD2585f24fE25cD763fB437305CbDC1610</li>
+        <li><strong>Card (Coming Soon):</strong> Visa/Mastercard</li>
+        <li><strong>PayPal (Coming Soon)</strong></li>
       </ul>
-      <p><i>Note: Limited to one wallet per user. Eligibility may vary by region.</i></p>
+      <p><em>Every donation helps provide dignified services to pets and families.</em></p>
     </div>
 
     <div class="section">
-      <h3>🥊 Connect Wallet</h3>
-      <button id="connectBtn" class="button">Connect Wallet</button>
-      <p class="wallet-address" id="walletDisplay">Wallet: Not connected</p>
-    </div>
-
-    <div class="section">
-      <h3>💰 Buy Tokens</h3>
+      <h2>💰 Buy Tokens</h2>
       <p>Purchase $PIP tokens below (Presale Price – <strong>$0.001</strong> per token)</p>
-      <form id="buy-form" onsubmit="buyTokens(); return false;">
-        <label for="amount">Enter ETH amount:</label><br>
-        <input type="number" id="amount" placeholder="e.g. 0.01"><br><br>
-        <button class="button">Buy Now</button>
-        <p style="font-size: 0.9em; color: #888; margin-top: 8px;">Token purchases require wallet connection.</p>
-      </form>
-      <div id="tokenBalance" style="margin-top: 15px; font-size: 14px; color: #555;"></div>
+      <label for="amount">Enter ETH amount:</label><br>
+      <input type="number" id="amount" placeholder="e.g. 0.01">
+      <br><br>
+      <button class="button" onclick="buyTokens()">Buy Now</button>
+      <p>Token purchases require wallet connection.</p>
     </div>
 
     <div class="section">
-      <h3>📜 Learn More</h3>
-      <ul>
-        <li><a href="#">📄 Read the Whitepaper</a></li>
-        <li><a href="#">💬 Join Telegram (Coming Soon)</a></li>
-        <li><a href="#">🔎 Follow us on X (Twitter)</a></li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h3>🛃 Why PIP?</h3>
-      <ul>
-        <li>Transparent blockchain verification</li>
-        <li>Real-world service utility</li>
-        <li>First pet cremation + Web3 hybrid</li>
-      </ul>
-      <blockquote>“Every pet deserves their own resting place — because they’re not just a number. They’re family.”</blockquote>
+      <h2>📈 Connect Wallet</h2>
+      <button id="connectBtn" class="button">Connect Wallet</button>
+      <p id="walletDisplay">Wallet: Not connected</p>
     </div>
   </div>
 
   <script>
     const CONTRACT_ADDRESS = '0xa1488aBD2585f24fE25cD763fB437305CbDC1610';
-    const ABI = [[{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"},{"internalType":"string","name":"name_","type":"string"},{"internalType":"string","name":"symbol_","type":"string"},{"internalType":"uint8","name":"decimal_","type":"uint8"},{"internalType":"uint256","name":"amountOfTokenWei","type":"uint256"},{"internalType":"uint8[5]","name":"setFees","type":"uint8[5]"},{"internalType":"uint256[6]","name":"maxFees","type":"uint256[6]"},{"internalType":"address","name":"devWalletAddress_","type":"address"},{"internalType":"address","name":"_router","type":"address"},{"internalType":"address","name":"_basePair","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"tokensSwapped","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"ethReceived","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"tokensIntoLiqudity","type":"uint256"}],"name":"SwapAndLiquify","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"SwapAndLiquifyAmountUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"bool","name":"enabled","type":"bool"}],"name":"SwapAndLiquifyEnabledUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"_devFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"_devWalletAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"_liquidityFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"_maxTxAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"_sellLiqFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"_sellTaxFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"_taxFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"basePair","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"excludeFromFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"excludeFromReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"includeInFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"includeInReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"isExcludedFromFee","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"isExcludedFromReward","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxDevFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxLiqFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxSellLiqFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxSellTaxFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"maxTaxFee","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minMxTxPercentage","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"mintedByDxsale","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"numTokensSellToAddToLiquidity","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tAmount","type":"uint256"},{"internalType":"bool","name":"deductTransferFee","type":"bool"}],"name":"reflectionFromToken","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"removeAllFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_addr","type":"address"},{"internalType":"address","name":"_newAddr","type":"address"}],"name":"replaceDevWalletAddress","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"restoreAllFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"router","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"devFee","type":"uint256"}],"name":"setDevFeePercent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"liquidityFee","type":"uint256"}],"name":"setLiquidityFeePercent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"maxTxPercent","type":"uint256"}],"name":"setMaxTxPercent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"sellLiqFee","type":"uint256"}],"name":"setSellLiqFeePercent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"sellTaxFee","type":"uint256"}],"name":"setSellTaxFeePercent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bool","name":"_enabled","type":"bool"}],"name":"setSwapAndLiquifyEnabled","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setSwapBackSettings","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"taxFee","type":"uint256"}],"name":"setTaxFeePercent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"swapAndLiquifyEnabled","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"rAmount","type":"uint256"}],"name":"tokenFromReflection","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalFees","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"uniswapV2Pair","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"uniswapV2Router","outputs":[{"internalType":"contract IUniswapV2Router02","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"stateMutability":"payable","type":"receive"}] ];
+    const ABI = [] // TODO: Paste your ABI array here when ready
 
     let web3;
+    let provider;
+    let web3Modal;
     let userAccount;
 
-    window.addEventListener('load', async () => {
-      if (window.ethereum) {
-        web3 = new Web3(window.ethereum);
-        document.getElementById('connectBtn').addEventListener('click', async () => {
-          const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    async function initWalletConnect() {
+      const providerOptions = {
+        walletconnect: {
+          package: window.WalletConnectProvider.default,
+          options: {
+            rpc: {
+              1: 'https://mainnet.infura.io/v3/0bba4f480b6f4a4f876fcf31d7e60ba3'
+            }
+          }
+        },
+        injected: {
+          display: {
+            name: "Browser Wallet",
+            description: "Connect using your browser extension (e.g., MetaMask, Trust Wallet)"
+          },
+          package: null
+        }
+      };
+
+      web3Modal = new window.Web3Modal.default({
+        cacheProvider: false,
+        providerOptions
+      });
+
+      document.getElementById('connectBtn').addEventListener('click', async () => {
+        try {
+          provider = await web3Modal.connect();
+          web3 = new Web3(provider);
+
+          const accounts = await web3.eth.getAccounts();
           userAccount = accounts[0];
           document.getElementById('walletDisplay').innerText = `Wallet: ${userAccount}`;
-        });
-      } else {
-        alert('MetaMask not detected. Please install MetaMask to continue.');
-      }
-    });
+        } catch (err) {
+          console.error("Could not connect to wallet:", err);
+        }
+      });
+    }
 
     async function buyTokens() {
       const ethAmount = document.getElementById('amount').value;
@@ -180,6 +224,34 @@
         alert('Transaction failed.');
       }
     }
+
+    function startCountdown() {
+      const endDate = new Date("2025-08-15T23:59:59").getTime();
+      const countdownEl = document.getElementById("countdown");
+
+      const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = endDate - now;
+
+        if (distance < 0) {
+          clearInterval(interval);
+          countdownEl.innerText = "Presale Ended";
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        countdownEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }, 1000);
+    }
+
+    window.addEventListener('load', () => {
+      initWalletConnect();
+      startCountdown();
+    });
   </script>
 </body>
 </html>
