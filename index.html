@@ -12,33 +12,71 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f4f2f7;
+      background: #000;
       margin: 0;
       padding: 0;
-      color: #333;
+      color: #eee;
+      overflow: hidden;
+    }
+
+    .background-paws {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .paw {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      background-image: url('https://studioxframe.ai/assets/paws-bg.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: floatPaws 30s linear infinite;
+      opacity: 0.07;
+    }
+
+    @keyframes floatPaws {
+      0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.2);
+        opacity: 0;
+      }
     }
 
     .container {
       max-width: 900px;
       margin: 0 auto;
       padding: 40px 20px;
+      position: relative;
+      z-index: 1;
     }
 
     h1, h2, h3 {
-      color: #5e3793;
+      color: #add8e6;
     }
 
     .section {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.05);
       padding: 30px;
       border-radius: 10px;
       margin-bottom: 30px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
     }
 
     .button {
-      background-color: #6f42c1;
-      color: white;
+      background-color: #add8e6;
+      color: #000;
       border: none;
       padding: 12px 24px;
       border-radius: 6px;
@@ -48,16 +86,18 @@
     }
 
     .button:hover {
-      background-color: #5936a0;
+      background-color: #9ac7dd;
     }
 
-    input[type="number"] {
+    input[type="number"], input[type="text"] {
       padding: 12px;
       font-size: 16px;
       border-radius: 6px;
-      border: 1px solid #ccc;
-      width: 220px;
+      border: 1px solid #aaa;
+      width: 100%;
       margin-top: 10px;
+      background: #111;
+      color: #eee;
     }
 
     ul {
@@ -67,11 +107,11 @@
 
     .wallet-address {
       font-family: monospace;
-      color: #555;
+      color: #ccc;
     }
 
     .progress-container {
-      background: #eee;
+      background: #222;
       border-radius: 6px;
       overflow: hidden;
       height: 24px;
@@ -80,9 +120,9 @@
 
     .progress-bar {
       height: 100%;
-      background: #6f42c1;
+      background: #add8e6;
       width: 35%;
-      color: white;
+      color: black;
       text-align: center;
       line-height: 24px;
       font-size: 14px;
@@ -91,7 +131,25 @@
     .countdown {
       font-weight: bold;
       font-size: 18px;
-      color: #c42e4d;
+      color: #add8e6;
+    }
+
+    .social-icons {
+      margin-top: 10px;
+    }
+
+    .social-icons a {
+      color: #add8e6;
+      margin-right: 15px;
+      font-size: 24px;
+      text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #aaa;
     }
 
     @media (max-width: 600px) {
@@ -104,154 +162,128 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+  <div class="background-paws" id="pawContainer"></div>
+
   <div class="container">
     <div class="section">
-      <h2>📉 Presale Progress</h2>
-      <p>Phase 1: 15% bonus — $0.001 USD per token — <strong>Live Now</strong></p>
-      <div class="progress-container">
-        <div class="progress-bar">35% Sold</div>
-      </div>
+      <h2>⏰ Phase 1 Ends In:</h2>
+      <p class="countdown" id="countdownTimer">Loading...</p>
     </div>
 
     <div class="section">
-      <h2>⏱️ Presale Ends In</h2>
-      <p class="countdown" id="countdown">Loading...</p>
+      <h2>👥 Affiliate Program</h2>
+      <p>Earn rewards for sharing PIP! Share your referral link:</p>
+      <input type="text" id="referralLink" readonly onclick="this.select();">
+      <p>Each referral earns bonus tokens on every successful contribution.</p>
     </div>
 
     <div class="section">
-      <h2>🔍 FAQ</h2>
+      <h2>🌟 Loyalty Tracker</h2>
+      <p>Track your token holdings and bonuses:</p>
       <ul>
-        <li><strong>What is PIP?</strong> Paws In Peace ($PIP) is a utility token supporting blockchain-powered pet aftercare.</li>
-        <li><strong>How can I participate?</strong> Connect a wallet (e.g., MetaMask, Trust Wallet) and purchase with ETH or USDT.</li>
-        <li><strong>What bonuses are available?</strong> Up to 15% bonus during Phase 1, decreasing in later phases.</li>
-        <li><strong>What can I use PIP for?</strong> Pet cremation discounts, staking, donations, and future DAO voting rights.</li>
+        <li>Hold 5,000+ PIP: 2 free cremation services</li>
+        <li>Hold 25,000+ PIP: Lifetime cremation coverage</li>
+        <li>Loyalty NFTs coming soon!</li>
       </ul>
     </div>
 
     <div class="section">
-      <h2>🙏 Donate</h2>
-      <p>Support our mission! Choose your donation method:</p>
+      <h2>🙏 Donate to Support</h2>
+      <p>You can support Paws In Peace using any of the following methods:</p>
       <ul>
-        <li><strong>Crypto:</strong> Send any amount to 0xa1488aBD2585f24fE25cD763fB437305CbDC1610</li>
-        <li><strong>Card (Coming Soon):</strong> Visa/Mastercard</li>
-        <li><strong>PayPal (Coming Soon)</strong></li>
+        <li><strong>Crypto:</strong> Send donations to <code>0xa1488aBD2585f24fE25cD763fB437305CbDC1610</code></li>
+        <li><strong>PayPal / Stripe:</strong> Coming soon with our dedicated email</li>
+        <li><strong>Debit/Credit Card:</strong> Will be available via secure Stripe gateway</li>
       </ul>
-      <p><em>Every donation helps provide dignified services to pets and families.</em></p>
     </div>
 
     <div class="section">
-      <h2>💰 Buy Tokens</h2>
-      <p>Purchase $PIP tokens below (Presale Price – <strong>$0.001</strong> per token)</p>
-      <label for="amount">Enter ETH amount:</label><br>
-      <input type="number" id="amount" placeholder="e.g. 0.01">
-      <br><br>
+      <h2>💰 Buy PIP Tokens</h2>
+      <p>Enter the USDT amount you want to spend:</p>
+      <input type="number" id="usdtAmount" placeholder="e.g. 100">
       <button class="button" onclick="buyTokens()">Buy Now</button>
-      <p>Token purchases require wallet connection.</p>
+      <p><span id="walletStatus">Wallet not connected</span></p>
+      <button class="button" onclick="connectWallet()">Connect Wallet</button>
     </div>
 
     <div class="section">
-      <h2>📈 Connect Wallet</h2>
-      <button id="connectBtn" class="button">Connect Wallet</button>
-      <p id="walletDisplay">Wallet: Not connected</p>
+      <h2>🔗 Join Our Community</h2>
+      <p class="social-icons">
+        <a href="https://x.com/pawsinpeace" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://t.me/pawsinpeace" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://discord.gg/pawsinpeace" target="_blank"><i class="fab fa-discord"></i></a>
+      </p>
     </div>
   </div>
 
+  <footer>
+    <p>&copy; 2025 Paws In Peace. All rights reserved.</p>
+    <p><a href="#" style="color: #add8e6; text-decoration: underline;">Terms of Use</a> | <a href="#" style="color: #add8e6; text-decoration: underline;">Privacy Policy</a></p>
+  </footer>
+
   <script>
-    const CONTRACT_ADDRESS = '0xa1488aBD2585f24fE25cD763fB437305CbDC1610';
-    const ABI = [] // TODO: Paste your ABI array here when ready
+    function createPaw() {
+      const paw = document.createElement('div');
+      paw.className = 'paw';
+      paw.style.left = Math.random() * 100 + 'vw';
+      paw.style.top = Math.random() * 100 + 'vh';
+      paw.style.transform = `scale(${0.5 + Math.random()})`;
+      paw.style.animationDuration = `${20 + Math.random() * 30}s`;
+      document.getElementById('pawContainer').appendChild(paw);
+      setTimeout(() => paw.remove(), 60000);
+    }
+    setInterval(createPaw, 1000);
 
-    let web3;
+    const countdownTimer = document.getElementById("countdownTimer");
+    const endTime = new Date("2025-08-01T00:00:00Z").getTime();
+    setInterval(() => {
+      const now = Date.now();
+      const diff = endTime - now;
+      if (diff < 0) return countdownTimer.textContent = "Phase 1 Ended";
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / (1000 * 60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+      countdownTimer.textContent = `${d}d ${h}h ${m}m ${s}s`;
+    }, 1000);
+
     let provider;
-    let web3Modal;
-    let userAccount;
+    let web3;
 
-    async function initWalletConnect() {
-      const providerOptions = {
-        walletconnect: {
-          package: window.WalletConnectProvider.default,
-          options: {
-            rpc: {
-              1: 'https://mainnet.infura.io/v3/0bba4f480b6f4a4f876fcf31d7e60ba3'
+    async function connectWallet() {
+      const web3Modal = new window.Web3Modal.default({
+        cacheProvider: false,
+        providerOptions: {
+          walletconnect: {
+            package: window.WalletConnectProvider.default,
+            options: {
+              rpc: {
+                1: "https://mainnet.infura.io/v3/YOUR_INFURA_ID",
+                137: "https://polygon-rpc.com"
+              }
             }
           }
-        },
-        injected: {
-          display: {
-            name: "Browser Wallet",
-            description: "Connect using your browser extension (e.g., MetaMask, Trust Wallet)"
-          },
-          package: null
-        }
-      };
-
-      web3Modal = new window.Web3Modal.default({
-        cacheProvider: false,
-        providerOptions
-      });
-
-      document.getElementById('connectBtn').addEventListener('click', async () => {
-        try {
-          provider = await web3Modal.connect();
-          web3 = new Web3(provider);
-
-          const accounts = await web3.eth.getAccounts();
-          userAccount = accounts[0];
-          document.getElementById('walletDisplay').innerText = `Wallet: ${userAccount}`;
-        } catch (err) {
-          console.error("Could not connect to wallet:", err);
         }
       });
+      provider = await web3Modal.connect();
+      web3 = new Web3(provider);
+      const accounts = await web3.eth.getAccounts();
+      document.getElementById("walletStatus").textContent = "Connected: " + accounts[0];
+      document.getElementById("referralLink").value = `https://pawsinpeace.io/presale?ref=${accounts[0]}`;
     }
 
     async function buyTokens() {
-      const ethAmount = document.getElementById('amount').value;
-      if (!userAccount || !ethAmount) return alert("Connect wallet and enter amount");
-
-      const contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
-
-      try {
-        await web3.eth.sendTransaction({
-          from: userAccount,
-          to: CONTRACT_ADDRESS,
-          value: web3.utils.toWei(ethAmount, 'ether')
-        });
-        alert('Transaction sent!');
-      } catch (err) {
-        console.error(err);
-        alert('Transaction failed.');
-      }
+      const amount = parseFloat(document.getElementById("usdtAmount").value);
+      if (!web3 || !provider) return alert("Please connect your wallet first.");
+      const accounts = await web3.eth.getAccounts();
+      const from = accounts[0];
+      alert(`Pretend to send ${amount} USDT from ${from} - Smart contract call goes here.`);
     }
-
-    function startCountdown() {
-      const endDate = new Date("2025-08-15T23:59:59").getTime();
-      const countdownEl = document.getElementById("countdown");
-
-      const interval = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = endDate - now;
-
-        if (distance < 0) {
-          clearInterval(interval);
-          countdownEl.innerText = "Presale Ended";
-          return;
-        }
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        countdownEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-      }, 1000);
-    }
-
-    window.addEventListener('load', () => {
-      initWalletConnect();
-      startCountdown();
-    });
   </script>
 </body>
+
 </html>
