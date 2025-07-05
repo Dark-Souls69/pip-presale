@@ -1,192 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-  
 <head>
   <meta charset="UTF-8">
   <title>🐾 Paws In Peace (PIP) Presale</title>
-  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-  <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
-  <script src="https://unpkg.com/web3modal"></script>
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.2/dist/ethers.min.js"></script>
   <style>
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #f4f2f7;
-    margin: 0;
-    padding: 0;
-    color: #333;
-  }
-
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 20px;
-  }
-
-  h1, h2, h3 {
-    color: #5e3793;
-  }
-
-  .section {
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  }
-
-  .button {
-    background-color: #6f42c1;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-
-  .button:hover {
-    background-color: #5936a0;
-  }
-
-  input[type="number"] {
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    width: 220px;
-    margin-top: 10px;
-  }
-
-  ul {
-    line-height: 1.7;
-    padding-left: 20px;
-  }
-
-  .wallet-address {
-    font-family: monospace;
-    color: #555;
-  }
-</style>
-
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f2f7;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    h1, h2, h3 {
+      color: #5e3793;
+    }
+    .section {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    .button {
+      background-color: #6f42c1;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #5936a0;
+    }
+    input[type="number"] {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 220px;
+      margin-top: 10px;
+    }
+    ul {
+      line-height: 1.7;
+      padding-left: 20px;
+    }
+    .wallet-address {
+      font-family: monospace;
+      color: #555;
+    }
+  </style>
 </head>
+
 <body>
-<div class="container">
-  <h1>🐾 Paws In Peace (PIP) Presale Landing Page</h1>
-  <h2>Join the $PIP Presale</h2>
-  <p>Invest in compassionate, blockchain-powered pet aftercare services. PIP isn’t just a token — it’s a movement to give every pet a respectful farewell.</p>
+  <div class="container">
+    <h1>🐾 Paws In Peace (PIP) Presale Landing Page</h1>
+    <h2>Join the $PIP Presale</h2>
+    <p>Invest in compassionate, blockchain-powered pet aftercare services. PIP isn’t just a token — it’s a movement to give every pet a respectful farewell.</p>
 
-  <div class="section">
-    <h3>🔥 Presale Phases</h3>
-    <ul>
-      <li><strong>Phase 1</strong>: 15% bonus — <b>$0.001 USD</b> per token — ✅ <b>Live Now</b></li>
-      <li><strong>Phase 2</strong>: 10% bonus — $0.0012 USD per token</li>
-      <li><strong>Phase 3</strong>: 5% bonus — $0.0015 USD per token</li>
-    </ul>
-    <p>Accepted: <strong>USDT, ETH, MATIC</strong></p>
+    <div class="section">
+      <h3>🔥 Presale Phases</h3>
+      <ul>
+        <li><strong>Phase 1</strong>: 15% bonus — <b>$0.001 USD</b> per token — ✅ <b>Live Now</b></li>
+        <li><strong>Phase 2</strong>: 10% bonus — $0.0012 USD per token</li>
+        <li><strong>Phase 3</strong>: 5% bonus — $0.0015 USD per token</li>
+      </ul>
+      <p>Accepted: <strong>ETH, USDT, MATIC</strong></p>
+    </div>
+
+    <div class="section">
+      <h3>🎁 Early Holder Benefits</h3>
+      <ul>
+        <li>Hold <b>5,000+ PIP</b>: Get <b>2 full cremation services free</b></li>
+        <li>Hold <b>25,000+ PIP</b>: Unlock <b>lifetime cremation coverage</b></li>
+      </ul>
+      <p><i>Note: Limited to one wallet per user. Eligibility may vary by region.</i></p>
+    </div>
+
+    <div class="section">
+      <h3>🦊 Connect Wallet</h3>
+      <button id="connectBtn" class="button">Connect Wallet</button>
+      <p class="wallet-address" id="walletDisplay">Wallet: Not connected</p>
+    </div>
+
+    <div class="section">
+      <h3>💰 Buy Tokens</h3>
+      <p>Purchase $PIP tokens below (Presale Price – <strong>$0.001</strong> per token)</p>
+      <form onsubmit="buyTokensETH(); return false;">
+        <label for="amount">Enter ETH amount:</label><br>
+        <input type="number" id="amount" placeholder="e.g. 0.01"><br><br>
+        <button class="button" type="submit">Buy Now</button>
+      </form>
+    </div>
+
+    <div class="section">
+      <h3>📚 Learn More</h3>
+      <ul>
+        <li><a href="#">📄 Read the Whitepaper</a></li>
+        <li><a href="#">💬 Join Telegram (Coming Soon)</a></li>
+        <li><a href="#">🐦 Follow us on X (Twitter)</a></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>🦴 Why PIP?</h3>
+      <ul>
+        <li>Transparent blockchain verification</li>
+        <li>Real-world service utility</li>
+        <li>First pet cremation + Web3 hybrid</li>
+      </ul>
+      <blockquote>“Every pet deserves their own resting place — because they’re not just a number. They’re family.”</blockquote>
+    </div>
   </div>
 
-  <div class="section">
-    <h3>🎁 Early Holder Benefits</h3>
-    <ul>
-      <li>Hold <b>5,000+ PIP</b>: Get <b>2 full cremation services free</b></li>
-      <li>Hold <b>25,000+ PIP</b>: Unlock <b>lifetime cremation coverage</b></li>
-    </ul>
-    <p><i>Note: Limited to one wallet per user. Eligibility may vary by region.</i></p>
-  </div>
-
-  <div class="section">
-    <h3>🦊 Connect Wallet</h3>
-    <button id="connectBtn" class="button">Connect Wallet</button>
-    <p class="wallet-address" id="walletDisplay">Wallet: Not connected</p>
-  </div>
-
- <div class="section">
-  <h3>💰 Buy Tokens</h3>
-  <p>Purchase $PIP tokens below (Presale Price – <strong>$0.001</strong> per token)</p>
-  <form id="buy-form" onsubmit="return false;">
-    <label for="amount">Enter USDT/ETH amount:</label><br>
-    <input type="number" id="amount" placeholder="e.g. 100" style="padding: 10px; width: 200px; margin-top: 8px;"><br><br>
-    
-    <button class="button" disabled>Buy Now (Coming Soon)</button>
-    <p style="font-size: 0.9em; color: #888; margin-top: 8px;">Token purchases will be enabled once smart contract is live.</p>
-  </form>
-</div>
-    <!-- end of content -->
-  </div>
-
-  <div class="section">
-    <h3>📚 Learn More</h3>
-    <ul>
-      <li><a href="#">📄 Read the Whitepaper</a></li>
-      <li><a href="#">💬 Join Telegram (Coming Soon)</a></li>
-      <li><a href="#">🐦 Follow us on X (Twitter)</a></li>
-    </ul>
-  </div>
-
-  <div class="section">
-    <h3>🦴 Why PIP?</h3>
-    <ul>
-      <li>Transparent blockchain verification</li>
-      <li>Real-world service utility</li>
-      <li>First pet cremation + Web3 hybrid</li>
-    </ul>
-    <blockquote>“Every pet deserves their own resting place — because they’re not just a number. They’re family.”</blockquote>
-  </div>
-
-  <!-- JS Wallet Connect -->
   <script>
-    let web3Modal;
-    let provider;
     let selectedAccount;
 
-    async function init() {
-      const providerOptions = {
-        walletconnect: {
-          package: window.WalletConnectProvider.default,
-          options: {
-            rpc: {
-              1: "https://mainnet.infura.io/v3/...", // replace with your Infura
-              137: "https://polygon-rpc.com"
-            },
-          }
-        }
-      };
+    const contractAddress = "PASTE_YOUR_CONTRACT_ADDRESS_HERE";
+    const contractABI = [/* PASTE_YOUR_ABI_JSON_HERE */];
 
-      web3Modal = new window.Web3Modal.default({
-        cacheProvider: false,
-        providerOptions
-      });
+    async function connectWallet() {
+      if (typeof window.ethereum === "undefined") {
+        alert("Please install MetaMask or a Web3 wallet.");
+        return;
+      }
 
-      document.getElementById("connectBtn").addEventListener("click", onConnect);
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+      const signer = await provider.getSigner();
+      selectedAccount = await signer.getAddress();
+      document.getElementById("walletDisplay").textContent = `Wallet: ${selectedAccount}`;
     }
 
-    async function onConnect() {
+    async function buyTokensETH() {
+      if (!selectedAccount) {
+        alert("Please connect your wallet first.");
+        return;
+      }
+
+      const amountInEth = document.getElementById("amount").value;
+      if (!amountInEth || isNaN(amountInEth)) {
+        alert("Enter a valid ETH amount.");
+        return;
+      }
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
       try {
-        provider = await web3Modal.connect();
-        const web3 = new Web3(provider);
-
-        const accounts = await web3.eth.getAccounts();
-        selectedAccount = accounts[0];
-
-        document.getElementById("walletDisplay").textContent = `Wallet: ${selectedAccount}`;
+        const tx = await contract.buyTokens({ value: ethers.parseEther(amountInEth) });
+        await tx.wait();
+        alert("✅ Token purchase successful!");
       } catch (err) {
-        console.error("Connection failed", err);
+        console.error(err);
+        alert("❌ Transaction failed. Check console.");
       }
     }
 
-    window.addEventListener('load', init);
+    document.getElementById("connectBtn").addEventListener("click", connectWallet);
   </script>
-
-  <!-- Google Analytics (Replace ID) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXX');
-  </script>
-
 </body>
 </html>
