@@ -107,10 +107,18 @@
     <p class="wallet-address" id="walletDisplay">Wallet: Not connected</p>
   </div>
 
-  <div class="section">
-    <h3>💰 Buy Tokens (Coming Soon)</h3>
-    <p>Token purchase form will go here once smart contract is live.</p>
-  </div>
+ <div class="section">
+  <h3>💰 Buy Tokens</h3>
+  <p>Purchase $PIP tokens below (Presale Price – <strong>$0.001</strong> per token)</p>
+  <form id="buy-form" onsubmit="return false;">
+    <label for="amount">Enter USDT/ETH amount:</label><br>
+    <input type="number" id="amount" placeholder="e.g. 100" style="padding: 10px; width: 200px; margin-top: 8px;"><br><br>
+    
+    <button class="button" disabled>Buy Now (Coming Soon)</button>
+    <p style="font-size: 0.9em; color: #888; margin-top: 8px;">Token purchases will be enabled once smart contract is live.</p>
+  </form>
+</div>
+
 
   <div class="section">
     <h3>📚 Learn More</h3>
