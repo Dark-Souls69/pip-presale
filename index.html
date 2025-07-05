@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>🐾 Paws In Peace (PIP) Presale</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+  <script src="https://unpkg.com/web3modal"></script>
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.2/dist/ethers.min.js"></script>
   <style>
     body {
@@ -12,14 +17,17 @@
       padding: 0;
       color: #333;
     }
+
     .container {
       max-width: 900px;
       margin: 0 auto;
       padding: 40px 20px;
     }
+
     h1, h2, h3 {
       color: #5e3793;
     }
+
     .section {
       background: #fff;
       padding: 30px;
@@ -27,6 +35,7 @@
       margin-bottom: 30px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
+
     .button {
       background-color: #6f42c1;
       color: white;
@@ -37,9 +46,11 @@
       font-size: 16px;
       transition: background-color 0.3s ease;
     }
+
     .button:hover {
       background-color: #5936a0;
     }
+
     input[type="number"] {
       padding: 12px;
       font-size: 16px;
@@ -48,13 +59,25 @@
       width: 220px;
       margin-top: 10px;
     }
+
     ul {
       line-height: 1.7;
       padding-left: 20px;
     }
+
     .wallet-address {
       font-family: monospace;
       color: #555;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 10px;
+      }
+
+      .button, input[type="number"] {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -72,7 +95,7 @@
         <li><strong>Phase 2</strong>: 10% bonus — $0.0012 USD per token</li>
         <li><strong>Phase 3</strong>: 5% bonus — $0.0015 USD per token</li>
       </ul>
-      <p>Accepted: <strong>ETH, USDT, MATIC</strong></p>
+      <p>Accepted: <strong>USDT, ETH, MATIC</strong></p>
     </div>
 
     <div class="section">
@@ -85,7 +108,7 @@
     </div>
 
     <div class="section">
-      <h3>🦊 Connect Wallet</h3>
+      <h3>🥊 Connect Wallet</h3>
       <button id="connectBtn" class="button">Connect Wallet</button>
       <p class="wallet-address" id="walletDisplay">Wallet: Not connected</p>
     </div>
@@ -93,24 +116,25 @@
     <div class="section">
       <h3>💰 Buy Tokens</h3>
       <p>Purchase $PIP tokens below (Presale Price – <strong>$0.001</strong> per token)</p>
-      <form onsubmit="buyTokensETH(); return false;">
+      <form id="buy-form" onsubmit="buyTokens(); return false;">
         <label for="amount">Enter ETH amount:</label><br>
         <input type="number" id="amount" placeholder="e.g. 0.01"><br><br>
-        <button class="button" type="submit">Buy Now</button>
+        <button class="button">Buy Now</button>
+        <p style="font-size: 0.9em; color: #888; margin-top: 8px;">Token purchases require wallet connection.</p>
       </form>
     </div>
 
     <div class="section">
-      <h3>📚 Learn More</h3>
+      <h3>📃 Learn More</h3>
       <ul>
         <li><a href="#">📄 Read the Whitepaper</a></li>
         <li><a href="#">💬 Join Telegram (Coming Soon)</a></li>
-        <li><a href="#">🐦 Follow us on X (Twitter)</a></li>
+        <li><a href="#">🔎 Follow us on X (Twitter)</a></li>
       </ul>
     </div>
 
     <div class="section">
-      <h3>🦴 Why PIP?</h3>
+      <h3>🧣 Why PIP?</h3>
       <ul>
         <li>Transparent blockchain verification</li>
         <li>Real-world service utility</li>
@@ -121,51 +145,62 @@
   </div>
 
   <script>
+    let web3Modal;
+    let provider;
+    let signer;
     let selectedAccount;
+    const contractAddress = "0x0000000000000000000000000000000000000000"; // Replace
+    const contractABI = [] // Replace with actual ABI
 
-    const contractAddress = "PASTE_YOUR_CONTRACT_ADDRESS_HERE";
-    const contractABI = [/* PASTE_YOUR_ABI_JSON_HERE */];
+    async function init() {
+      const providerOptions = {
+        walletconnect: {
+          package: window.WalletConnectProvider.default,
+          options: {
+            rpc: {
+              1: "https://mainnet.infura.io/v3/...",
+              137: "https://polygon-rpc.com"
+            },
+          }
+        }
+      };
 
-    async function connectWallet() {
-      if (typeof window.ethereum === "undefined") {
-        alert("Please install MetaMask or a Web3 wallet.");
-        return;
-      }
+      web3Modal = new window.Web3Modal.default({
+        cacheProvider: false,
+        providerOptions
+      });
 
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      await provider.send("eth_requestAccounts", []);
-      const signer = await provider.getSigner();
-      selectedAccount = await signer.getAddress();
-      document.getElementById("walletDisplay").textContent = `Wallet: ${selectedAccount}`;
+      document.getElementById("connectBtn").addEventListener("click", onConnect);
     }
 
-    async function buyTokensETH() {
-      if (!selectedAccount) {
-        alert("Please connect your wallet first.");
-        return;
-      }
-
-      const amountInEth = document.getElementById("amount").value;
-      if (!amountInEth || isNaN(amountInEth)) {
-        alert("Enter a valid ETH amount.");
-        return;
-      }
-
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-      const contract = new ethers.Contract(contractAddress, contractABI, signer);
-
+    async function onConnect() {
       try {
-        const tx = await contract.buyTokens({ value: ethers.parseEther(amountInEth) });
-        await tx.wait();
-        alert("✅ Token purchase successful!");
+        provider = await web3Modal.connect();
+        const ethersProvider = new ethers.BrowserProvider(provider);
+        signer = await ethersProvider.getSigner();
+        selectedAccount = await signer.getAddress();
+        document.getElementById("walletDisplay").textContent = `Wallet: ${selectedAccount}`;
       } catch (err) {
-        console.error(err);
-        alert("❌ Transaction failed. Check console.");
+        console.error("Connection failed", err);
       }
     }
 
-    document.getElementById("connectBtn").addEventListener("click", connectWallet);
+    async function buyTokens() {
+      const amount = document.getElementById("amount").value;
+      if (!signer || !amount || amount <= 0) return alert("Connect wallet and enter a valid amount");
+
+      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+      try {
+        const tx = await contract.buyTokens({ value: ethers.parseEther(amount) });
+        await tx.wait();
+        alert("Transaction successful!");
+      } catch (err) {
+        console.error("Transaction failed", err);
+        alert("Error: " + err.message);
+      }
+    }
+
+    window.addEventListener('load', init);
   </script>
 </body>
 </html>
