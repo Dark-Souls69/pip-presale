@@ -2,53 +2,149 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Paws In Peace (PIP) Presale</title>
+  <title>🐾 Paws In Peace (PIP) Presale</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+  <script src="https://unpkg.com/web3modal"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 40px;
+      background: #fcfcfc;
+      color: #333;
+    }
+    h1, h2 {
+      color: #3b0a57;
+    }
+    .section {
+      margin-top: 40px;
+    }
+    .button {
+      background-color: #6f42c1;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .button:hover {
+      background-color: #5936a0;
+    }
+    ul { line-height: 1.8; }
+    .wallet-address {
+      font-family: monospace;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
+
   <h1>🐾 Paws In Peace (PIP) Presale Landing Page</h1>
   <h2>Join the $PIP Presale</h2>
-  <p>Invest in compassionate, blockchain-powered pet aftercare services. PIP isn’t just a token — it’s a movement to ensure that every pet receives a respectful farewell.</p>
+  <p>Invest in compassionate, blockchain-powered pet aftercare services. PIP isn’t just a token — it’s a movement to give every pet a respectful farewell.</p>
 
-  <h3>💰 Presale Phases</h3>
-  <ul>
-    <li><strong>Phase 1:</strong> 15% bonus — <strong>$0.001 USD</strong> per token — 10% supply — ⏳ <strong>Live Now</strong></li>
-    <li><strong>Phase 2:</strong> 10% bonus — <strong>$0.0012 USD</strong> per token — 10% supply</li>
-    <li><strong>Phase 3:</strong> 5% bonus — <strong>$0.0015 USD</strong> per token — 5% supply</li>
-  </ul>
-  <p>🧾 Accepted Payments: <strong>USDT, ETH, MATIC</strong></p>
+  <div class="section">
+    <h3>🔥 Presale Phases</h3>
+    <ul>
+      <li><strong>Phase 1</strong>: 15% bonus — <b>$0.001 USD</b> per token — ✅ <b>Live Now</b></li>
+      <li><strong>Phase 2</strong>: 10% bonus — $0.0012 USD per token</li>
+      <li><strong>Phase 3</strong>: 5% bonus — $0.0015 USD per token</li>
+    </ul>
+    <p>Accepted: <strong>USDT, ETH, MATIC</strong></p>
+  </div>
 
-  <h3>🎁 Early Holder Benefits</h3>
-  <ul>
-    <li>Hold <strong>5,000+ PIP</strong>: Get up to <strong>2 full cremation services free</strong></li>
-    <li>Hold <strong>25,000+ PIP</strong>: Unlock <strong>lifetime cremation coverage</strong></li>
-  </ul>
-  <p><em>Note: Benefits limited to one wallet per user. Eligibility may vary by region.</em></p>
+  <div class="section">
+    <h3>🎁 Early Holder Benefits</h3>
+    <ul>
+      <li>Hold <b>5,000+ PIP</b>: Get <b>2 full cremation services free</b></li>
+      <li>Hold <b>25,000+ PIP</b>: Unlock <b>lifetime cremation coverage</b></li>
+    </ul>
+    <p><i>Note: Limited to one wallet per user. Eligibility may vary by region.</i></p>
+  </div>
 
-  <h3>🔗 How to Participate</h3>
-  <ol>
-    <li>Connect your wallet</li>
-    <li>Choose amount to invest</li>
-    <li>Confirm via MetaMask/Web3</li>
-  </ol>
-  <button>Connect Wallet</button>
+  <div class="section">
+    <h3>🦊 Connect Wallet</h3>
+    <button id="connectBtn" class="button">Connect Wallet</button>
+    <p class="wallet-address" id="walletDisplay">Wallet: Not connected</p>
+  </div>
 
-  <h3>📄 Learn More</h3>
-  <ul>
-    <li>📘 <a href="#">Read the Whitepaper</a></li>
-    <li>💬 Join Telegram (Coming Soon)</li>
-    <li>🐦 <a href="https://twitter.com/PawsInPeace">Follow us on X (Twitter)</a></li>
-  </ul>
+  <div class="section">
+    <h3>💰 Buy Tokens (Coming Soon)</h3>
+    <p>Token purchase form will go here once smart contract is live.</p>
+  </div>
 
-  <h3>💡 Why PIP?</h3>
-  <ul>
-    <li>Transparent blockchain verification</li>
-    <li>Real-world service utility</li>
-    <li>First pet cremation + Web3 hybrid</li>
-  </ul>
+  <div class="section">
+    <h3>📚 Learn More</h3>
+    <ul>
+      <li><a href="#">📄 Read the Whitepaper</a></li>
+      <li><a href="#">💬 Join Telegram (Coming Soon)</a></li>
+      <li><a href="#">🐦 Follow us on X (Twitter)</a></li>
+    </ul>
+  </div>
 
-  <blockquote>
-    “Every pet deserves their own resting place — because they’re not just a number. They’re family.”
-  </blockquote>
+  <div class="section">
+    <h3>🦴 Why PIP?</h3>
+    <ul>
+      <li>Transparent blockchain verification</li>
+      <li>Real-world service utility</li>
+      <li>First pet cremation + Web3 hybrid</li>
+    </ul>
+    <blockquote>“Every pet deserves their own resting place — because they’re not just a number. They’re family.”</blockquote>
+  </div>
+
+  <!-- JS Wallet Connect -->
+  <script>
+    let web3Modal;
+    let provider;
+    let selectedAccount;
+
+    async function init() {
+      const providerOptions = {
+        walletconnect: {
+          package: window.WalletConnectProvider.default,
+          options: {
+            rpc: {
+              1: "https://mainnet.infura.io/v3/...", // replace with your Infura
+              137: "https://polygon-rpc.com"
+            },
+          }
+        }
+      };
+
+      web3Modal = new window.Web3Modal.default({
+        cacheProvider: false,
+        providerOptions
+      });
+
+      document.getElementById("connectBtn").addEventListener("click", onConnect);
+    }
+
+    async function onConnect() {
+      try {
+        provider = await web3Modal.connect();
+        const web3 = new Web3(provider);
+
+        const accounts = await web3.eth.getAccounts();
+        selectedAccount = accounts[0];
+
+        document.getElementById("walletDisplay").textContent = `Wallet: ${selectedAccount}`;
+      } catch (err) {
+        console.error("Connection failed", err);
+      }
+    }
+
+    window.addEventListener('load', init);
+  </script>
+
+  <!-- Google Analytics (Replace ID) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX');
+  </script>
+
 </body>
 </html>
