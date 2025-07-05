@@ -9,72 +9,67 @@
   <script src="https://unpkg.com/web3modal"></script>
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.2/dist/ethers.min.js"></script>
   <style>
-    <script>
-  // 1. Setup Wallet Provider Options
-  const providerOptions = {
-    walletconnect: {
-      package: window.WalletConnectProvider.default,
-      options: {
-        infuraId: "a8f0620d28b14c9c86d245ea9c8a4c66", // Free demo Infura ID
-      },
-    },
-  };
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f2f7;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
 
-  // 2. Create Web3Modal instance
-  const web3Modal = new window.Web3Modal.default({
-    cacheProvider: false,
-    providerOptions,
-    theme: "light",
-  });
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
 
-  let provider;
-  let web3;
-  let accounts;
+  h1, h2, h3 {
+    color: #5e3793;
+  }
 
-  // 3. Handle Connect Button Click
-  document.querySelector(".connect-wallet").addEventListener("click", async () => {
-    try {
-      provider = await web3Modal.connect();
-      web3 = new window.Web3(provider);
-      accounts = await web3.eth.getAccounts();
-      const walletDisplay = document.getElementById("wallet-status");
-      walletDisplay.innerText = `Wallet: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
-    } catch (err) {
-      console.error("Connection error:", err);
-    }
-  });
-</script>
+  .section {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
 
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 40px;
-      background: #fcfcfc;
-      color: #333;
-    }
-    h1, h2 {
-      color: #3b0a57;
-    }
-    .section {
-      margin-top: 40px;
-    }
-    .button {
-      background-color: #6f42c1;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .button:hover {
-      background-color: #5936a0;
-    }
-    ul { line-height: 1.8; }
-    .wallet-address {
-      font-family: monospace;
-      color: #555;
-    }
-  </style>
+  .button {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  .button:hover {
+    background-color: #5936a0;
+  }
+
+  input[type="number"] {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 220px;
+    margin-top: 10px;
+  }
+
+  ul {
+    line-height: 1.7;
+    padding-left: 20px;
+  }
+
+  .wallet-address {
+    font-family: monospace;
+    color: #555;
+  }
+</style>
+
 </head>
 <body>
 
