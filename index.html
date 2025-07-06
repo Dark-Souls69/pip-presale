@@ -3,12 +3,13 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>🌾 Paws In Peace (PIP) Presale</title>
+  <title>🐾 EmberPaws (EPW) Presale</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
   <script src="https://unpkg.com/web3modal"></script>
   <script src="https://unpkg.com/@walletconnect/web3-provider"></script>
   <script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
+  <script src="js/epw-integration.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -33,7 +34,7 @@
       position: absolute;
       width: 80px;
       height: 80px;
-      background-image: url('https://studioxframe.ai/assets/paws-bg.png');
+      background-image: url('assets/paws-bg.png');
       background-size: contain;
       background-repeat: no-repeat;
       animation: floatPaws 30s linear infinite;
@@ -41,249 +42,36 @@
     }
 
     @keyframes floatPaws {
-      0% {
-        transform: translateY(100vh) scale(0.5);
-        opacity: 0;
-      }
-      50% {
-        opacity: 0.3;
-      }
-      100% {
-        transform: translateY(-100vh) scale(1.2);
-        opacity: 0;
-      }
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      50% { opacity: 0.3; }
+      100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
     }
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    h1, h2, h3 {
-      color: #add8e6;
-    }
-
-    .section {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 30px;
-      border-radius: 10px;
-      margin-bottom: 30px;
-      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
-    }
-
-    .button {
-      background-color: #add8e6;
-      color: #000;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-
-    .button:hover {
-      background-color: #9ac7dd;
-    }
-
-    input[type="number"], input[type="text"] {
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #aaa;
-      width: 100%;
-      margin-top: 10px;
+    .verified-url {
+      font-size: 14px;
       background: #111;
-      color: #eee;
-    }
-
-    ul {
-      line-height: 1.7;
-      padding-left: 20px;
-    }
-
-    .wallet-address {
-      font-family: monospace;
-      color: #ccc;
-    }
-
-    .progress-container {
-      background: #222;
+      padding: 6px 12px;
       border-radius: 6px;
-      overflow: hidden;
-      height: 24px;
-      margin-top: 10px;
-    }
-
-    .progress-bar {
-      height: 100%;
-      background: #add8e6;
-      width: 35%;
-      color: black;
-      text-align: center;
-      line-height: 24px;
-      font-size: 14px;
-    }
-
-    .countdown {
-      font-weight: bold;
-      font-size: 18px;
+      border: 1px solid #333;
+      margin: 20px;
       color: #add8e6;
-    }
-
-    .social-icons {
-      margin-top: 10px;
-    }
-
-    .social-icons a {
-      color: #add8e6;
-      margin-right: 15px;
-      font-size: 24px;
-      text-decoration: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      color: #aaa;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 20px 10px;
-      }
-
-      .button, input[type="number"] {
-        width: 100%;
-      }
+      display: inline-block;
     }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-  <div class="background-paws" id="pawContainer"></div>
-
   <div class="container">
-    <div class="section">
-      <h2>⏰ Phase 1 Ends In:</h2>
-      <p class="countdown" id="countdownTimer">Loading...</p>
+    <div class="verified-url">
+      ✅ Verified Site: <strong>emberpaws.io</strong> — double-check the URL above!
     </div>
-
-    <div class="section">
-      <h2>👥 Affiliate Program</h2>
-      <p>Earn rewards for sharing PIP! Share your referral link:</p>
-      <input type="text" id="referralLink" readonly onclick="this.select();">
-      <p>Each referral earns bonus tokens on every successful contribution.</p>
-    </div>
-
-    <div class="section">
-      <h2>🌟 Loyalty Tracker</h2>
-      <p>Track your token holdings and bonuses:</p>
-      <ul>
-        <li>Hold 5,000+ PIP: 2 free cremation services</li>
-        <li>Hold 25,000+ PIP: Lifetime cremation coverage</li>
-        <li>Loyalty NFTs coming soon!</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h2>🙏 Donate to Support</h2>
-      <p>You can support Paws In Peace using any of the following methods:</p>
-      <ul>
-        <li><strong>Crypto:</strong> Send donations to <code>0xa1488aBD2585f24fE25cD763fB437305CbDC1610</code></li>
-        <li><strong>PayPal / Stripe:</strong> Coming soon with our dedicated email</li>
-        <li><strong>Debit/Credit Card:</strong> Will be available via secure Stripe gateway</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h2>💰 Buy PIP Tokens</h2>
-      <p>Enter the USDT amount you want to spend:</p>
-      <input type="number" id="usdtAmount" placeholder="e.g. 100">
-      <button class="button" onclick="buyTokens()">Buy Now</button>
-      <p><span id="walletStatus">Wallet not connected</span></p>
-      <button class="button" onclick="connectWallet()">Connect Wallet</button>
-    </div>
-
-    <div class="section">
-      <h2>🔗 Join Our Community</h2>
-      <p class="social-icons">
-        <a href="https://x.com/pawsinpeace" target="_blank"><i class="fab fa-x-twitter"></i></a>
-        <a href="https://t.me/pawsinpeace" target="_blank"><i class="fab fa-telegram"></i></a>
-        <a href="https://discord.gg/pawsinpeace" target="_blank"><i class="fab fa-discord"></i></a>
-      </p>
+    <div class="background-paws">
+      <div class="paw" style="left: 10%; animation-delay: 0s;"></div>
+      <div class="paw" style="left: 30%; animation-delay: 5s;"></div>
+      <div class="paw" style="left: 50%; animation-delay: 10s;"></div>
+      <div class="paw" style="left: 70%; animation-delay: 15s;"></div>
+      <div class="paw" style="left: 90%; animation-delay: 20s;"></div>
     </div>
   </div>
-
-  <footer>
-    <p>&copy; 2025 Paws In Peace. All rights reserved.</p>
-    <p><a href="#" style="color: #add8e6; text-decoration: underline;">Terms of Use</a> | <a href="#" style="color: #add8e6; text-decoration: underline;">Privacy Policy</a></p>
-  </footer>
-
-  <script>
-    function createPaw() {
-      const paw = document.createElement('div');
-      paw.className = 'paw';
-      paw.style.left = Math.random() * 100 + 'vw';
-      paw.style.top = Math.random() * 100 + 'vh';
-      paw.style.transform = `scale(${0.5 + Math.random()})`;
-      paw.style.animationDuration = `${20 + Math.random() * 30}s`;
-      document.getElementById('pawContainer').appendChild(paw);
-      setTimeout(() => paw.remove(), 60000);
-    }
-    setInterval(createPaw, 1000);
-
-    const countdownTimer = document.getElementById("countdownTimer");
-    const endTime = new Date("2025-08-01T00:00:00Z").getTime();
-    setInterval(() => {
-      const now = Date.now();
-      const diff = endTime - now;
-      if (diff < 0) return countdownTimer.textContent = "Phase 1 Ended";
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const m = Math.floor((diff / (1000 * 60)) % 60);
-      const s = Math.floor((diff / 1000) % 60);
-      countdownTimer.textContent = `${d}d ${h}h ${m}m ${s}s`;
-    }, 1000);
-
-    let provider;
-    let web3;
-
-    async function connectWallet() {
-      const web3Modal = new window.Web3Modal.default({
-        cacheProvider: false,
-        providerOptions: {
-          walletconnect: {
-            package: window.WalletConnectProvider.default,
-            options: {
-              rpc: {
-                1: "https://mainnet.infura.io/v3/YOUR_INFURA_ID",
-                137: "https://polygon-rpc.com"
-              }
-            }
-          }
-        }
-      });
-      provider = await web3Modal.connect();
-      web3 = new Web3(provider);
-      const accounts = await web3.eth.getAccounts();
-      document.getElementById("walletStatus").textContent = "Connected: " + accounts[0];
-      document.getElementById("referralLink").value = `https://pawsinpeace.io/presale?ref=${accounts[0]}`;
-    }
-
-    async function buyTokens() {
-      const amount = parseFloat(document.getElementById("usdtAmount").value);
-      if (!web3 || !provider) return alert("Please connect your wallet first.");
-      const accounts = await web3.eth.getAccounts();
-      const from = accounts[0];
-      alert(`Pretend to send ${amount} USDT from ${from} - Smart contract call goes here.`);
-    }
-  </script>
 </body>
-
 </html>
