@@ -57,11 +57,29 @@
     <div class="verified-url">
       ✅ Verified Site: <strong>emberpaws.io</strong> — double-check the URL above!
     </div>
-    <div class="background-paws">
-      <div class="paw" style="left: 10%; animation-delay: 0s;"></div>
-      <div class="paw" style="left: 40%; animation-delay: 5s;"></div>
-      <div class="paw" style="left: 70%; animation-delay: 10s;"></div>
-    </div>
+<!-- ✅ Wallet Status -->
+<div id="wallet-status" class="wallet-status">
+  🔌 Not Connected
+</div>
+
+<!-- ✅ Connect Wallet Button -->
+<button onclick="connectWallet()" class="action-button">🔗 Connect Wallet</button>
+
+<!-- ✅ Buy Token Form -->
+<div style="margin-top: 20px;">
+  <input type="number" id="eth-amount" placeholder="Enter ETH amount" style="padding: 8px; width: 200px;" />
+  <button onclick="buyTokens(document.getElementById('eth-amount').value)" class="action-button">🪙 Buy PIP Tokens</button>
+</div>
+
+<!-- 🌟 Background animation stays at the bottom -->
+<div class="background-paws">
+  <div class="paw" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="paw" style="left: 40%; animation-delay: 5s;"></div>
+  <div class="paw" style="left: 70%; animation-delay: 10s;"></div>
+</div>
+
   </div>
+  <script src="js/epw-integration.js"></script>
+
 </body>
 </html>
