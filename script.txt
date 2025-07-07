@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const paw = document.createElement('div');
         paw.classList.add('paw-print');
         paw.style.backgroundImage = `url(${pawPrintImage})`;
-
+`
         const startX = Math.random() * window.innerWidth;
         const startY = -100; // Start higher off-screen
         paw.style.left = `${startX}px`;
