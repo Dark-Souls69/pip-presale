@@ -48,7 +48,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../images/pawroad.jpg'); /* Path to your paw print image (use .png if preferred) */
+    background-image: url('./images/pawroad.png'); /* Path to your paw print image (use .png if preferred) */
     background-repeat: repeat; /* Repeat the paw print image across the screen */
     background-size: 150px; /* Adjust size of individual paw prints for desired density */
     opacity: 0.15; /* Initial subtle transparency for ethereal look */
