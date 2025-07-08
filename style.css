@@ -1,5 +1,5 @@
 /* style.css - Paws In Peace (PIP) Coin Website Styles */
-/* Version: 1.0.3 - Subtle Motion, Contract Verification Info, Wallet Transparency Section */
+/* Version: 1.0.4 - Dual Logo Positioning (Left & Right), Responsive Headers */
 /* Author: Gemini AI */
 /* Date: July 8, 2025 */
 /* Goal: Clean, modern, pseudo-3D design with a black/gold theme and paw print background animation. */
@@ -79,7 +79,7 @@ body::before {
     z-index: 1;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    transition: all 0.3s ease-in-out; /* Subtle transition for containers */
+    transition: all 0.3s ease-in-out;
 }
 .container:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.15);
@@ -88,14 +88,43 @@ body::before {
 
 /* --- Header & Logo Styling --- */
 header {
-    position: relative;
-    min-height: 80px;
-    padding-top: 20px;
+    position: relative; /* Allows absolute positioning of logos within it */
+    min-height: 100px; /* Ensure enough space for logos and nav */
+    padding-top: 20px; /* Space from top */
+}
+
+/* Common styling for both logo links */
+.header-logo-link {
+    position: absolute;
+    top: 20px; /* Distance from top of header */
+    z-index: 1001; /* Ensure logos are above nav */
+    display: block;
+    transition: transform 0.3s ease-in-out; /* Subtle motion */
+}
+.header-logo-link:hover {
+    transform: scale(1.05); /* Slight enlarge on hover for both */
+}
+
+/* Specific positioning for left logo */
+.left-logo-link {
+    left: 20px; /* Distance from left of header */
+}
+
+/* Specific positioning for right logo */
+.right-logo-link {
+    right: 20px; /* Distance from right of header */
+}
+
+/* Common styling for both logo images */
+.header-logo {
+    max-width: 150px; /* Max width for both logo images */
+    height: auto;
+    filter: drop-shadow(0 0 10px var(--gold-color)); /* Ethereal glow */
 }
 
 nav {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Center the nav items */
     align-items: center;
     padding: 10px 20px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -120,7 +149,7 @@ nav ul li a {
     font-weight: 500;
     font-size: 1.1em;
     padding: 5px 0;
-    transition: color 0.3s ease, transform 0.3s ease; /* Subtle motion */
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 nav ul li a:hover {
@@ -128,25 +157,6 @@ nav ul li a:hover {
     transform: translateY(-3px);
 }
 
-/* Logo specific styling */
-.logo-link {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1001;
-    display: block;
-}
-
-.logo {
-    max-width: 150px;
-    height: auto;
-    filter: drop-shadow(0 0 10px var(--gold-color));
-    transition: transform 0.3s ease-in-out; /* Subtle motion */
-}
-
-.logo:hover {
-    transform: scale(1.1);
-}
 
 /* Hero section specific styles */
 .hero {
@@ -184,7 +194,7 @@ nav ul li a:hover {
     text-decoration: none;
     font-weight: bold;
     font-size: 1.1em;
-    transition: all 0.3s ease; /* Subtle motion */
+    transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 
@@ -225,7 +235,7 @@ nav ul li a:hover {
     max-width: 180px;
     height: auto;
     filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.7));
-    transition: transform 0.3s ease; /* Subtle motion */
+    transition: transform 0.3s ease;
 }
 
 .coin-img:hover {
@@ -259,7 +269,7 @@ p {
 .timeline-item ul li,
 .why-pip-item p,
 #how-to-buy ol li {
-    text-align: left; /* Keep specific content left-aligned */
+    text-align: left;
 }
 /* New styling for smart contract info */
 .contract-info {
@@ -275,7 +285,7 @@ p {
     font-weight: bold;
     display: inline-block;
     margin-bottom: 5px;
-    transition: color 0.3s ease, transform 0.3s ease; /* Subtle motion */
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 .scan-link:hover {
     color: #ffe066;
@@ -309,7 +319,7 @@ section {
     border-radius: 12px;
     border: 1px solid rgba(255, 215, 0, 0.2);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Subtle motion */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .feature-item:hover {
@@ -321,7 +331,7 @@ section {
     font-size: 3em;
     color: var(--gold-color);
     margin-bottom: 20px;
-    transition: transform 0.3s ease; /* Subtle motion */
+    transition: transform 0.3s ease;
 }
 .feature-item:hover .feature-icon {
     transform: scale(1.1);
@@ -342,7 +352,7 @@ section {
     border-radius: 10px;
     border: 1px solid rgba(255, 215, 0, 0.2);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Subtle motion */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .tokenomic-item:hover {
     transform: translateY(-5px);
@@ -367,7 +377,7 @@ section {
 
 /* Wallet Transparency Section Styling */
 #wallet-transparency {
-    margin-top: 40px; /* Space from previous container */
+    margin-top: 40px;
 }
 
 .transparency-wallets-grid {
@@ -435,16 +445,10 @@ section {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    transition: transform 0.3s ease; /* Subtle motion */
+    transition: transform 0.3s ease;
 }
 #how-to-buy ol li:hover {
     transform: translateY(-5px);
-}
-
-#how-to-buy ol li strong {
-    text-align: center;
-    display: block;
-    margin-bottom: 5px;
 }
 
 #how-to-buy ol li::before {
@@ -485,7 +489,7 @@ section {
     border-radius: 10px;
     border: 1px solid rgba(255, 215, 0, 0.2);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Subtle motion */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .timeline-item:hover {
     transform: translateY(-5px);
@@ -532,7 +536,7 @@ section {
     border-radius: 10px;
     border: 1px solid rgba(255, 215, 0, 0.2);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Subtle motion */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .why-pip-item:hover {
     transform: translateY(-5px);
@@ -563,7 +567,7 @@ section {
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: color 0.3s ease, transform 0.3s ease; /* Subtle motion */
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .social-links a i {
@@ -606,13 +610,18 @@ footer {
         font-size: 1.2em;
     }
 
-    .logo-link {
-        top: 15px;
-        right: 15px;
+    /* Adjust logo positioning for smaller screens */
+    .header-logo-link {
+        top: 10px; /* Closer to top */
     }
-
-    .logo {
-        max-width: 120px;
+    .left-logo-link {
+        left: 10px; /* Closer to left edge */
+    }
+    .right-logo-link {
+        right: 10px; /* Closer to right edge */
+    }
+    .header-logo {
+        max-width: 100px; /* Smaller logos on mobile */
     }
 
     .coin-icons {
@@ -628,11 +637,20 @@ footer {
         flex-wrap: wrap;
         justify-content: center;
         gap: 15px;
+        padding: 10px 0; /* Adjust nav padding if logos take more vertical space */
     }
 
-    nav ul li a {
-        font-size: 1em;
+    nav {
+        /* On small screens, the nav might be below the logos */
+        /* Or you might need a hamburger menu here */
+        position: static; /* Let it flow normally below logos for now */
+        background: none; /* Remove background on static nav */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        padding-top: 0;
+        margin-top: 120px; /* Pushes nav below logos */
     }
+
 
     h1, h2, h3 {
         text-align: center;
@@ -672,5 +690,9 @@ footer {
     .btn {
         padding: 12px 25px;
         font-size: 1em;
+    }
+    /* Further adjustment for very small screens if necessary */
+    .header-logo {
+        max-width: 80px; /* Even smaller logos */
     }
 }
