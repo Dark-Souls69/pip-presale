@@ -1,0 +1,15 @@
+.background-animation {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("images/pawroad.png");
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-size: contain;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+/* Add more stylings here like .logo-img, .hero-buttons, etc. as needed */
