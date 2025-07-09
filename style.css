@@ -1,5 +1,5 @@
 /* style.css - Paws In Peace (PIP) Coin Website Styles */
-/* Version: 1.0.4 - Dual Logo Positioning (Left & Right), Responsive Headers */
+/* Version: 1.0.5 - Hero Tagline Added */
 /* Author: Gemini AI */
 /* Date: July 8, 2025 */
 /* Goal: Clean, modern, pseudo-3D design with a black/gold theme and paw print background animation. */
@@ -88,43 +88,43 @@ body::before {
 
 /* --- Header & Logo Styling --- */
 header {
-    position: relative; /* Allows absolute positioning of logos within it */
-    min-height: 100px; /* Ensure enough space for logos and nav */
-    padding-top: 20px; /* Space from top */
+    position: relative;
+    min-height: 100px;
+    padding-top: 20px;
 }
 
 /* Common styling for both logo links */
 .header-logo-link {
     position: absolute;
-    top: 20px; /* Distance from top of header */
-    z-index: 1001; /* Ensure logos are above nav */
+    top: 20px;
+    z-index: 1001;
     display: block;
-    transition: transform 0.3s ease-in-out; /* Subtle motion */
+    transition: transform 0.3s ease-in-out;
 }
 .header-logo-link:hover {
-    transform: scale(1.05); /* Slight enlarge on hover for both */
+    transform: scale(1.05);
 }
 
 /* Specific positioning for left logo */
 .left-logo-link {
-    left: 20px; /* Distance from left of header */
+    left: 20px;
 }
 
 /* Specific positioning for right logo */
 .right-logo-link {
-    right: 20px; /* Distance from right of header */
+    right: 20px;
 }
 
 /* Common styling for both logo images */
 .header-logo {
-    max-width: 150px; /* Max width for both logo images */
+    max-width: 150px;
     height: auto;
-    filter: drop-shadow(0 0 10px var(--gold-color)); /* Ethereal glow */
+    filter: drop-shadow(0 0 10px var(--gold-color));
 }
 
 nav {
     display: flex;
-    justify-content: center; /* Center the nav items */
+    justify-content: center;
     align-items: center;
     padding: 10px 20px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -179,6 +179,20 @@ nav ul li a:hover {
     color: var(--text-color);
     margin-bottom: 40px;
 }
+
+/* New tagline in hero section */
+.hero-tagline {
+    font-family: var(--font-heading);
+    font-size: 1.8em;
+    color: var(--gold-color);
+    margin-top: 40px;
+    margin-bottom: 50px; /* Space below */
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+    letter-spacing: 1px;
+    font-weight: 700;
+    text-align: center;
+}
+
 
 .hero-buttons {
     display: flex;
@@ -612,16 +626,38 @@ footer {
 
     /* Adjust logo positioning for smaller screens */
     .header-logo-link {
-        top: 10px; /* Closer to top */
+        top: 10px;
     }
     .left-logo-link {
-        left: 10px; /* Closer to left edge */
+        left: 10px;
     }
     .right-logo-link {
-        right: 10px; /* Closer to right edge */
+        right: 10px;
     }
     .header-logo {
-        max-width: 100px; /* Smaller logos on mobile */
+        max-width: 100px;
+    }
+
+    nav {
+        position: static;
+        background: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        padding-top: 0;
+        margin-top: 20px;
+    }
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        padding: 10px 0;
+    }
+
+
+    .hero-tagline {
+        font-size: 1.5em;
+        margin-top: 30px;
+        margin-bottom: 40px;
     }
 
     .coin-icons {
@@ -632,25 +668,6 @@ footer {
     .coin-img {
         max-width: 150px;
     }
-
-    nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-        padding: 10px 0; /* Adjust nav padding if logos take more vertical space */
-    }
-
-    nav {
-        /* On small screens, the nav might be below the logos */
-        /* Or you might need a hamburger menu here */
-        position: static; /* Let it flow normally below logos for now */
-        background: none; /* Remove background on static nav */
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        padding-top: 0;
-        margin-top: 120px; /* Pushes nav below logos */
-    }
-
 
     h1, h2, h3 {
         text-align: center;
@@ -691,8 +708,10 @@ footer {
         padding: 12px 25px;
         font-size: 1em;
     }
-    /* Further adjustment for very small screens if necessary */
     .header-logo {
-        max-width: 80px; /* Even smaller logos */
+        max-width: 80px;
+    }
+    .hero-tagline {
+        font-size: 1.2em;
     }
 }
