@@ -14,6 +14,7 @@
     .selected-tier { border-color: #fbbf24 !important; background: rgba(251,191,36,.10); }
     .hidden { display: none; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.12.1/dist/ethers.umd.min.js"></script>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white">
 
@@ -490,6 +491,112 @@
   </main>
 
   <script>
+    // ---- Chain / Contract (Arbitrum One) ----
+    const ARBITRUM_CHAIN_ID_HEX = "0xa4b1"; // 42161
+    const CONTRACT_ADDR = "0x56917d2838855B9A89f5B893Acc8DDA3cF4D6029";
+    const PIP_ABI = [
+      "function mint(string,string,uint8,string) payable",
+      "function mintWithToken(string,string,uint8,string,address)",
+      "function getMediaPrice(uint8) view returns (uint256 ethPrice, uint256 usdPrice)",
+      "function getMemorial(uint256) view returns (tuple(string petName,string memorialDate,uint8 mediaType,string mediaURI,uint256 mintTimestamp,uint256 ethPaid,bool isLocked))",
+      "function getTotalSupply() view returns (uint256)",
+      "function getAcceptedTokens() view returns (address[])",
+      "function getTokenPrice(uint8,address) view returns (uint256 amount, bool enabled)",
+      "event MemorialMinted(uint256 indexed tokenId, address indexed to, string petName, uint8 mediaType)",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)"
+    ];
+
+    // Map UI package → on-chain MediaType (0=Photo,1=Video,2=Animation)
+    const MEDIA_TYPE_BY_PACKAGE = { basic:0, premium:1, deluxe:2, simple:0, complete:1, legacy:2 };
+
+    async function ensureArbitrumProvider() {
+      if (!window.ethereum) throw new Error("No wallet found. Please install MetaMask.");
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const net = await provider.getNetwork();
+      if (Number(net.chainId) !== 42161) {
+        await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: ARBITRUM_CHAIN_ID_HEX }] });
+      }
+      return provider;
+    }
+
+    async function getContract(readonly=false) {
+      const provider = await ensureArbitrumProvider();
+      if (readonly) return new ethers.Contract(CONTRACT_ADDR, PIP_ABI, provider);
+      const signer = await provider.getSigner();
+      return new ethers.Contract(CONTRACT_ADDR, PIP_ABI, signer);
+    }
+
+    async function fetchOnchainPriceForCurrentSelection() {
+      try {
+        if (!state.tierKey) return;
+        const mediaType = MEDIA_TYPE_BY_PACKAGE[state.tierKey];
+        const c = await getContract(true);
+        const [wei] = await c.getMediaPrice(mediaType);
+        const eth = Number(ethers.formatEther(wei));
+        state.baseEth = eth; // prefer on-chain price over static card price
+        updatePricingSummary();
+        updateCustomizationSummary();
+      } catch (e) {
+        console.debug("getMediaPrice failed, using fallback:", e?.message || e);
+      }
+    }
+
+    async function connectWallet() {
+      if (!window.ethereum) { alert("Please install MetaMask."); return; }
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      try { await ensureArbitrumProvider(); } catch (_) {}
+      const accts = await window.ethereum.request({ method: 'eth_accounts' });
+      const btn = document.getElementById('connectBtn');
+      btn.textContent = (accts && accts[0]) ? `👛 ${accts[0].slice(0,6)}…${accts[0].slice(-4)}` : '👛 Connect Wallet';
+    }
+
+    async function mintNowSelfService() {
+      try {
+        const petName = document.getElementById('petName').value.trim();
+        const memorialDate = document.getElementById('memorialDate').value;
+        const mediaURI = document.getElementById('mediaUrl').value.trim();
+        if (!petName) { alert("Please enter your pet's name."); return; }
+        if (!state.tierKey) { alert('Please choose a package.'); return; }
+        if (!mediaURI) { alert('Please provide an ipfs:// or https:// media URL.'); return; }
+
+        const mediaType = MEDIA_TYPE_BY_PACKAGE[state.tierKey] ?? 0;
+
+        // Read on-chain price (safer). Fallback to UI price if needed.
+        let valueWei;
+        try {
+          const cRead = await getContract(true);
+          const [wei] = await cRead.getMediaPrice(mediaType);
+          valueWei = wei;
+        } catch {
+          valueWei = ethers.parseEther(String(state.baseEth || 0));
+        }
+
+        const c = await getContract(false);
+        const tx = await c.mint(petName, memorialDate, mediaType, mediaURI, { value: valueWei });
+        const receipt = await tx.wait();
+
+        // Try to extract tokenId
+        let tokenId = null;
+        const iface = new ethers.Interface(PIP_ABI);
+        for (const log of receipt.logs) {
+          try {
+            const parsed = iface.parseLog(log);
+            if (parsed.name === 'MemorialMinted') { tokenId = parsed.args.tokenId.toString(); break; }
+            if (parsed.name === 'Transfer' && parsed.args.from === '0x0000000000000000000000000000000000000000') { tokenId = parsed.args.tokenId.toString(); break; }
+          } catch {}
+        }
+        const url = `https://arbiscan.io/tx/${receipt.hash}`;
+        alert(`Mint successful!
+
+Token ID: ${tokenId ?? '(detected)'}
+Tx: ${url}`);
+        showHome();
+      } catch (err) {
+        console.error(err);
+        alert(`Mint failed: ${err?.shortMessage || err?.message || err}`);
+      }
+    }
+
     // ---- Global State ----
     const state = {
       flow: null,              // 'lifetime' | 'resting'
@@ -540,9 +647,11 @@
       grid.querySelectorAll('.tier-card').forEach(b => b.classList.remove('selected-tier'));
       button.classList.add('selected-tier');
       state.tierKey = button.dataset.tier;
+      // start from card price, then override with on-chain price
       state.baseEth = parseFloat(button.dataset.price);
       updatePricingSummary();
       updateCustomizationSummary();
+      fetchOnchainPriceForCurrentSelection();
       // enable continue button for current flow
       if (state.flow === 'lifetime') $('#toServiceFromLifetime').disabled = false;
       if (state.flow === 'resting')  $('#toServiceFromResting').disabled  = false;
@@ -556,11 +665,13 @@
       // Set CTA text
       const cta = $('#serviceContinue');
       if (state.service === 'self') {
-        cta.textContent = 'Mint Now (Web3) →';
-        cta.className = 'bg-gradient-to-r from-purple-500 to-purple-600 px-8 py-3 rounded-lg font-semibold text-lg hover:from-purple-400 hover:to-purple-500';
+        title.textContent = 'Finalize & Mint';
+        fullForm.classList.add('hidden');
+        cta.textContent = 'Mint Now';
       } else {
-        cta.textContent = 'Order Full Service →';
-        cta.className = 'bg-gradient-to-r from-green-500 to-green-600 px-8 py-3 rounded-lg font-semibold text-lg hover:from-green-400 hover:to-green-500';
+        title.textContent = 'Provide Details (Full Service)';
+        fullForm.classList.remove('hidden');
+        cta.textContent = 'Place Full‑Service Order';
       }
       cta.disabled = false;
       updateCustomizationSummary();
@@ -616,7 +727,7 @@
     // Header
     $('#logoBtn').addEventListener('click', showHome);
     $('#galleryBtn').addEventListener('click', showGallery);
-    $('#connectBtn').addEventListener('click', () => alert('Connect wallet (demo).'));
+    $('#connectBtn').addEventListener('click', () => connectWallet());
 
     // Home
     $('#lifetimeBtn').addEventListener('click', showLifetime);
@@ -655,16 +766,19 @@
     $('#serviceContinue').addEventListener('click', showCustomization);
 
     // Final CTA actions
-    $('#finalCta').addEventListener('click', () => {
+    $('#finalCta').addEventListener('click', async () => {
       if (!state.baseEth || !state.tierKey) { alert('Please choose a package first.'); return; }
       const petName = $('#petName').value.trim();
       if (!petName) { alert('Please enter your pet\'s name.'); return; }
       if (state.service === 'self') {
-        alert(`(Demo) Would mint now on ${$('#networkSelect').value}.\n\nPet: ${petName}\nPackage: ${prettyTier(state.tierKey)}\nTotal: ${fmt(state.baseEth)} ETH`);
+        await connectWallet();
+        await mintNowSelfService();
       } else {
         const email = $('#contactEmail').value.trim();
         if (!email) { alert('Please provide a contact email.'); return; }
-        alert(`(Demo) Full‑service order placed!\n\nWe\'ll email ${email} within 2–3 business days with your preview.`);
+        alert(`(Demo) Full‑service order placed!
+
+We'll email ${email} within 2–3 business days with your preview.`);
         showHome();
       }
     });
