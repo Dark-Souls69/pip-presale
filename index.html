@@ -3,223 +3,836 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paws In Peace (PIP) - Revolutionizing Pet Aftercare with Blockchain</title>
-    
-    <link rel="stylesheet" href="style.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
-    
-    <link rel="icon" href="images/favicon.png" type="image/png">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Paws in Peace Memorial</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.js"></script>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <a href="#" class="header-logo-link left-logo-link">
-            <img src="images/logo_left.png" alt="Secondary Logo" class="header-logo">
-        </a>
-        <a href="#" class="header-logo-link right-logo-link">
-            <img src="images/logo.png" alt="PIP Coin Logo" class="header-logo">
-        </a>
+    <div id="root"></div>
 
-        <nav>
-            <ul>
-                <li><a href="#overview">Overview</a></li>
-                <li><a href="#solution">The Solution</a></li>
-                <li><a href="#tokenomics">Tokenomics</a></li>
-                <li><a href="#roadmap">Roadmap</a></li>
-                <li><a href="#team">Team</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+        const { Heart, Plus, Star, Calendar, Share2, Camera, Crown, Award, Sparkles, ChevronRight, ArrowLeft, Wallet } = lucideReact;
 
-        <div class="hero">
-            <h1>Honoring Our Companions with Dignity & Transparency</h1>
-            <p>Paws In Peace (PIP) is revolutionizing the pet aftercare industry by leveraging blockchain for trust, accountability, and community governance.</p>
-            <div class="hero-buttons">
-                <a href="#contact" class="btn primary">Inquire About Private Round</a>
-                <a href="link-to-your-whitepaper.pdf" target="_blank" class="btn secondary">Read the Whitepaper</a>
-            </div>
-            <p class="hero-tagline">EVERY PET DESERVES A RESTING PLACE</p>
-        </div>
-    </header>
+        // Mock ethers for deployment (replace with real ethers when contracts are ready)
+        const ethers = {
+            BrowserProvider: class { constructor() {} },
+            Contract: class { constructor() {} },
+            parseEther: (val) => val + " ETH",
+            formatEther: (val) => val,
+            isAddress: () => true
+        };
 
-    <main>
-        <section id="overview" class="container">
-            <h2>A Revolution in Pet Aftercare</h2>
-            <p>Paws In Peace (PIP) is a utility token and decentralized platform designed to solve the trust and transparency crisis in pet aftercare services. Combining blockchain's immutable ledger, community governance, and deep compassion, PIP empowers users to access premium, verified pet cremation, create lasting digital memorials, and participate in a cause-driven ecosystem.</p>
-            <p class="mission-statement">"To ensure every beloved pet has a dignified farewell, a personalized memorial, and a place to rest in peace — never mixed with others, never forgotten."</p>
-        </section>
+        const ADDR = {
+            "421614": "0xYourArbitrumSepoliaAddress", // Arbitrum Sepolia (test)
+            "42161":  "0xYourArbitrumOneAddress",      // Arbitrum One (main)
+        };
 
-        <section id="solution" class="container">
-            <h2>The Solution</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <i class="fas fa-coins feature-icon"></i>
-                    <h3>Utility Token (PIP)</h3>
-                    <p>The core of our ecosystem, used for service payments, staking rewards, and DAO governance votes.</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-check-circle feature-icon"></i>
-                    <h3>Blockchain-Verified Services</h3>
-                    <p>On-chain tracking from pickup to final return of ashes ensures transparency and peace of mind.</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-cube feature-icon"></i>
-                    <h3>3D Digital & Physical Memorials</h3>
-                    <p>Create life-like 3D pet models for our digital memorial park and order 3D-printed urns.</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-tree feature-icon"></i>
-                    <h3>Eco-Friendly Tributes</h3>
-                    <p>Options include planting a memorial tree and other sustainable ways to honor your companion.</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-vote-yea feature-icon"></i>
-                    <h3>Community Governance (DAO)</h3>
-                    <p>PIP holders vote on platform expansions, new services, and charitable partnerships.</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-shopping-basket feature-icon"></i>
-                    <h3>Future Marketplace</h3>
-                    <p>A planned platform for ordering services, tracking loyalty points, and accessing partner rewards.</p>
-                </div>
-            </div>
-        </section>
+        // Real Paws in Peace Tokenomics
+        const TOKENOMICS = {
+            totalSupply: "5,000,000,000,000", // 5 trillion PIP tokens
+            presaleHardCap: "$20,000,000",
+            launchPrice: "$0.00004",
+            liquidityPool: {
+                tokens: "200B PIP",
+                usdc: "$8M USDC"
+            },
+            fundAllocation: {
+                liquidity: { percent: 40, amount: "$8M" },
+                physicalCenters: { percent: 30, amount: "$6M" },
+                marketing: { percent: 14.5, amount: "$2.9M" },
+                blockchain: { percent: 11, amount: "$2.2M" },
+                security: { percent: 4.5, amount: "$0.9M" }
+            },
+            distribution: {
+                publicPresale: { percent: 10, tokens: "500B" },
+                launchLiquidity: { percent: 4, tokens: "200B" },
+                marketingTreasury: { percent: 27, tokens: "1.35T" },
+                teamAdvisors: { percent: 10, tokens: "500B" },
+                stakingRewards: { percent: 49, tokens: "2.45T" }
+            },
+            profitSharing: "10% of annual net profits distributed to presale holders"
+        };
 
-        <section id="tokenomics" class="container">
-            <h2>Tokenomics</h2>
-            <p>A clear and sustainable economic model designed for long-term growth and stability.</p>
-            <div class="tokenomics-grid">
-                <div class="tokenomics-item">
-                    <h3>Token Name</h3>
-                    <p>Paws In Peace</p>
-                </div>
-                <div class="tokenomics-item">
-                    <h3>Symbol</h3>
-                    <p>PIP</p>
-                </div>
-                <div class="tokenomics-item">
-                    <h3>Network</h3>
-                    <p>Polygon (ERC20)</p>
-                </div>
-                <div class="tokenomics-item">
-                    <h3>Total Supply</h3>
-                    <p>3,500,000,000,000 (3.5 Trillion)</p>
-                </div>
-                <div class="tokenomics-item">
-                    <h3>Launch Liquidity</h3>
-                    <p>600,000,000,000 (17.1%)</p>
-                    <small>Paired with $200k & Locked</small>
-                </div>
-                <div class="tokenomics-item">
-                    <h3>Project Treasury</h3>
-                    <p>1,050,000,000,000 (30%)</p>
-                    <small>For marketing, development, & CEX listings</small>
-                </div>
-                <div class="tokenomics-item">
-                    <h3>Team & Advisors</h3>
-                    <p>525,000,000,000 (15%)</p>
-                    <small>Vested over 24 months</small>
-                </div>
-                 <div class="tokenomics-item">
-                    <h3>Staking & Community Rewards</h3>
-                    <p>1,325,000,000,000 (37.9%)</p>
-                    <small>To reward long-term holders</small>
-                </div>
-            </div>
-        </section>
+        const ABI = [
+            "function mint(string petName,string memorialDate,uint8 mediaType,string mediaURI) payable",
+            "function getMediaPrice(uint8 mediaType) view returns (uint256 ethPrice, uint256 usdPrice)"
+        ];
 
-        <section id="roadmap" class="container">
-            <h2>Our Roadmap</h2>
-            <div class="roadmap-timeline">
-                <div class="timeline-item">
-                    <h3>✅ Q3 2025: Foundation & Private Funding</h3>
-                    <ul>
-                        <li>Finalize Whitepaper & Pitch Deck</li>
-                        <li>Secure Legal Counsel for SAFT</li>
-                        <li>Close $200,000 Private SAFT Round</li>
-                        <li>Initial Community Building on Social Media</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h3>🚀 Q4 2025: Launch & Service Rollout</h3>
-                    <ul>
-                        <li>Token Generation Event (TGE) & Public Launch</li>
-                        <li>Establish $400,000 initial Liquidity Pool</li>
-                        <li>Official Cremation Service Website Launch</li>
-                        <li>Begin accepting PIP & Fiat for services</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h3>🧪 Q1 2026: Innovation & Governance</h3>
-                    <ul>
-                        <li>Launch of Digital Memorial Platform V1</li>
-                        <li>Introduce 3D Urn & Figurine ordering</li>
-                        <li>Begin DAO Voting for initial proposals</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h3>📈 Q2 2026: Ecosystem Expansion</h3>
-                    <ul>
-                        <li>Beta launch of staking platform</li>
-                        <li>Strategic partnerships with vet clinics & shelters</li>
-                        <li>Explore first franchise licensing opportunities</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        
-        <section id="team" class="container">
-            <h2>Our Team</h2>
-            <p>The dedicated founders and advisors committed to bringing the Paws In Peace vision to life.</p>
-            <div class="team-grid">
-                <div class="team-member">
-                    <img src="images/team-placeholder-1.png" alt="Team Member 1">
-                    <h3>Your Name</h3>
-                    <p>Founder & CEO</p>
-                </div>
-                <div class="team-member">
-                    <img src="images/team-placeholder-2.png" alt="Team Member 2">
-                    <h3>Team Member Name</h3>
-                    <p>Co-Founder & CTO</p>
-                </div>
-                <div class="team-member">
-                    <img src="images/team-placeholder-3.png" alt="Advisor Name">
-                    <h3>Advisor Name</h3>
-                    <p>Strategic Advisor</p>
-                </div>
-            </div>
-        </section>
+        const CHAINS = {
+            421614: { hex: "0x66eee", label: "Arbitrum Sepolia" },
+            42161:  { hex: "0xa4b1", label: "Arbitrum One" },
+        };
 
-        <section id="contact" class="container">
-            <h2>Get Involved</h2>
-            <p>Whether you're an investor interested in our private round or a community member who shares our vision, we want to hear from you.</p>
-             <div class="contact-methods">
-                <div class="contact-investors">
-                    <h3>For Investors</h3>
-                    <p>Inquiries regarding the private SAFT round can be sent directly to our investment team.</p>
-                    <a href="mailto:invest@pawsinpeace.ca" class="btn primary">Contact Investments</a>
-                </div>
-                <div class="contact-community">
-                    <h3>For Community</h3>
-                    <p>Join our growing community to stay updated on the latest news and charity initiatives.</p>
-                    <div class="social-links">
-                        <a href="https://t.me/yourtelegramchannel" target="_blank"><i class="fab fa-telegram-plane"></i></a>
-                        <a href="https://x.com/yourtwitter" target="_blank"><i class="fab fa-twitter"></i></a>
-                        <a href="https://discord.gg/yourdiscord" target="_blank"><i class="fab fa-discord"></i></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+        const collectionStyle = (name) => {
+            const map = {
+                Founders: { from: "from-yellow-400", to: "to-yellow-600", border: "border-yellow-400/40" },
+                Gold:     { from: "from-yellow-300", to: "to-yellow-500", border: "border-yellow-400/40" },
+                Silver:   { from: "from-gray-300",   to: "to-gray-500",   border: "border-gray-400/40" },
+                Diamond:  { from: "from-purple-200", to: "to-purple-400", border: "border-purple-400/40" },
+                Gemini:   { from: "from-blue-300",   to: "to-blue-500",   border: "border-blue-400/40" },
+            };
+            return map[name] || { from: "from-purple-300", to: "to-purple-500", border: "border-purple-400/40" };
+        };
 
-    <footer>
-        <p>&copy; 2025 Paws In Peace (PIP). All rights reserved.</p>
-        <p>Disclaimer: Investing in early-stage crypto projects involves significant risk. This is not financial advice. Please conduct your own research.</p>
-    </footer>
+        const collectionIcon = (name) => {
+            switch (name) {
+                case "Founders": return React.createElement(Crown, { className: "w-4 h-4 text-yellow-300" });
+                case "Gold":     return React.createElement(Star, { className: "w-4 h-4 text-yellow-400" });
+                case "Silver":   return React.createElement(Award, { className: "w-4 h-4 text-gray-300" });
+                case "Diamond":  return React.createElement(Sparkles, { className: "w-4 h-4 text-purple-300" });
+                case "Gemini":   return React.createElement(Star, { className: "w-4 h-4 text-blue-300" });
+                default:         return React.createElement(Award, { className: "w-4 h-4 text-purple-300" });
+            }
+        };
 
-    <script src="script.js"></script>
+        const PawsInPeaceApp = () => {
+            const [currentView, setCurrentView] = useState("home");
+            const [selectedPet, setSelectedPet] = useState(null);
+            const [favorites, setFavorites] = useState(new Set());
+            const [account, setAccount] = useState("");
+            const [chainId, setChainId] = useState(421614);
+            const [form, setForm] = useState({
+                petName: "", memorialDate: "", message: "",
+                mediaType: 0, mediaURI: "", visualStyle: "Founders"
+            });
+
+            // Sample memorial tokens for demo - Updated with real project context
+            const memorialTokens = useMemo(() => ([
+                { id: 1, name: "Nani", breed: "Mixed Breed", dates: "May 15, 2020", collection: "Founders", mediaType: "Photo", image: "🐾", message: "The inspiration behind Paws in Peace - Forever in our hearts", owner: "Founder's Story", mintDate: "2024-08-15", tokenId: "#001", price: "0.016 ETH" },
+                { id: 2, name: "Pincher", breed: "Doberman", dates: "2018 - 2024", collection: "Gold", mediaType: "Video", image: "🐕‍🦺", message: "Guardian of our family, protector of hearts", owner: "The Rodriguez Family", mintDate: "2024-08-14", tokenId: "#002", price: "0.024 ETH" },
+                { id: 3, name: "Luna", breed: "Golden Retriever", dates: "2015 - 2024", collection: "Silver", mediaType: "Photo", image: "🦮", message: "Golden memories that shine forever bright", owner: "The Williams Family", mintDate: "2024-08-12", tokenId: "#003", price: "0.016 ETH" },
+                { id: 4, name: "Princess", breed: "Persian Cat", dates: "2020 - 2024", collection: "Diamond", mediaType: "Animation", image: "💎", message: "Royal companion, precious memories crystallized", owner: "Maria Santos", mintDate: "2024-08-10", tokenId: "#004", price: "0.032 ETH" },
+                { id: 5, name: "Buddy", breed: "Beagle Mix", dates: "2019 - 2024", collection: "Gemini", mediaType: "Photo", image: "⭐", message: "Best friend, adventure companion, eternal joy", owner: "The Davis Family", mintDate: "2024-08-08", tokenId: "#005", price: "0.016 ETH" },
+                { id: 6, name: "Max", breed: "German Shepherd", dates: "2016 - 2024", collection: "Founders", mediaType: "Video", image: "🐺", message: "Loyal guardian, brave heart, unforgotten hero", owner: "Emergency Services", mintDate: "2024-08-06", tokenId: "#006", price: "0.024 ETH" },
+                { id: 7, name: "Whiskers", breed: "Maine Coon", dates: "2017 - 2024", collection: "Silver", mediaType: "Photo", image: "🐱", message: "Gentle giant with the softest purr", owner: "The Thompson Family", mintDate: "2024-08-04", tokenId: "#007", price: "0.016 ETH" },
+                { id: 8, name: "Charlie", breed: "Labrador", dates: "2019 - 2024", collection: "Gold", mediaType: "Animation", image: "🎾", message: "Ball-chasing champion, heart full of joy", owner: "The Park Rangers", mintDate: "2024-08-02", tokenId: "#008", price: "0.032 ETH" }
+            ]), []);
+
+            const connectWallet = async () => {
+                if (!window.ethereum) { 
+                    alert("Please install MetaMask to connect your wallet"); 
+                    return; 
+                }
+                setAccount("0x1234...5678");
+            };
+
+            const toggleFavorite = (id) => {
+                const newFavorites = new Set(favorites);
+                newFavorites.has(id) ? newFavorites.delete(id) : newFavorites.add(id);
+                setFavorites(newFavorites);
+            };
+
+            const handleMint = async () => {
+                if (!account) await connectWallet();
+                const petName = form.petName.trim();
+                if (!petName) { 
+                    alert("Please enter a pet name."); 
+                    return; 
+                }
+                alert(`Memorial for ${petName} created successfully! 🎉\n\nThis is a demo. Connect your deployed contract for real minting.`);
+                setForm(f => ({ ...f, petName: "", mediaURI: "" }));
+            };
+
+            const MemorialToken = ({ token, onClick, compact = false }) => {
+                const st = collectionStyle(token.collection);
+                return React.createElement('div', {
+                    onClick: () => onClick(token),
+                    className: `glass backdrop-blur-md bg-white/10 rounded-xl border border-white/20 cursor-pointer transform transition-all duration-300 hover:scale-105 hover:bg-white/15 ${compact ? "p-3" : "p-6"}`
+                }, [
+                    React.createElement('div', { 
+                        key: 'header',
+                        className: "flex items-center justify-between mb-4" 
+                    }, [
+                        React.createElement('div', {
+                            key: 'avatar',
+                            className: `${compact ? "w-12 h-12" : "w-16 h-16"} bg-gradient-to-br ${st.from} ${st.to} rounded-full flex items-center justify-center text-white text-2xl border border-white/30`
+                        }, token.image),
+                        React.createElement('div', {
+                            key: 'actions',
+                            className: "flex items-center gap-2"
+                        }, [
+                            collectionIcon(token.collection),
+                            React.createElement('button', {
+                                key: 'favorite',
+                                onClick: (e) => { e.stopPropagation(); toggleFavorite(token.id); },
+                                className: `p-2 rounded-full transition-colors ${favorites.has(token.id) ? "text-pink-300" : "text-white/60 hover:text-pink-300"}`
+                            }, React.createElement(Heart, { 
+                                className: `w-5 h-5 ${favorites.has(token.id) ? "fill-current" : ""}` 
+                            }))
+                        ])
+                    ]),
+                    React.createElement('div', {
+                        key: 'content',
+                        className: `${compact ? "space-y-1" : "space-y-2"}`
+                    }, [
+                        React.createElement('h3', {
+                            key: 'name',
+                            className: `font-bold text-white ${compact ? "text-lg" : "text-xl"}`
+                        }, token.name),
+                        React.createElement('p', {
+                            key: 'breed',
+                            className: "text-white/80 text-sm"
+                        }, token.breed),
+                        React.createElement('p', {
+                            key: 'dates',
+                            className: "text-white/70 text-sm font-medium"
+                        }, token.dates),
+                        React.createElement('div', {
+                            key: 'badges',
+                            className: "flex items-center gap-2"
+                        }, [
+                            React.createElement('span', {
+                                key: 'collection',
+                                className: `text-xs px-2 py-1 rounded-full bg-gradient-to-r ${st.from} ${st.to} text-white font-medium`
+                            }, token.collection),
+                            React.createElement('span', {
+                                key: 'mediaType',
+                                className: "text-xs text-white/60"
+                            }, token.mediaType)
+                        ]),
+                        !compact && React.createElement('p', {
+                            key: 'message',
+                            className: "text-white/80 text-sm italic mt-3"
+                        }, `"${token.message}"`),
+                        !compact && React.createElement('div', {
+                            key: 'footer',
+                            className: "flex justify-between items-center mt-4 pt-3 border-t border-white/20"
+                        }, [
+                            React.createElement('span', {
+                                key: 'tokenId',
+                                className: "text-xs text-white/50"
+                            }, token.tokenId),
+                            React.createElement('span', {
+                                key: 'price',
+                                className: "text-xs text-yellow-400 font-medium"
+                            }, token.price)
+                        ])
+                    ])
+                ]);
+            };
+
+            const Header = () => React.createElement('header', {
+                className: "glass backdrop-blur-md bg-white/10 border-b border-white/15"
+            }, React.createElement('div', {
+                className: "max-w-7xl mx-auto px-4 py-4 flex items-center justify-between"
+            }, [
+                React.createElement('button', {
+                    key: 'logo',
+                    onClick: () => setCurrentView("home"),
+                    className: "flex items-center gap-3"
+                }, [
+                    React.createElement('div', {
+                        key: 'icon',
+                        className: "w-10 h-10 rounded-full bg-purple-600 grid place-items-center text-2xl"
+                    }, "🐾"),
+                    React.createElement('div', {
+                        key: 'title',
+                        className: "font-bold text-xl text-white"
+                    }, "Paws in Peace Personal Memorial")
+                ]),
+                React.createElement('div', {
+                    key: 'controls',
+                    className: "flex items-center gap-3"
+                }, [
+                    React.createElement('select', {
+                        key: 'chain',
+                        value: chainId,
+                        onChange: (e) => setChainId(Number(e.target.value)),
+                        className: "px-3 py-2 rounded-lg bg-white/10 text-white border border-white/30"
+                    }, [
+                        React.createElement('option', { key: 'sepolia', value: "421614" }, "Arbitrum Sepolia (test)"),
+                        React.createElement('option', { key: 'mainnet', value: "42161" }, "Arbitrum One (main)")
+                    ]),
+                    React.createElement('button', {
+                        key: 'wallet',
+                        onClick: connectWallet,
+                        className: "px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white flex items-center gap-2"
+                    }, [
+                        React.createElement(Wallet, { key: 'icon', className: "w-4 h-4" }),
+                        account ? `${account.slice(0,6)}…${account.slice(-4)}` : "Connect Wallet"
+                    ])
+                ])
+            ]));
+
+            const HomeView = () => React.createElement('div', {
+                className: "space-y-8"
+            }, [
+                React.createElement('div', {
+                    key: 'hero',
+                    className: "glass backdrop-blur-md bg-white/10 rounded-2xl p-8 text-center border border-white/20 animate-float"
+                }, [
+                    React.createElement('div', {
+                        key: 'icon',
+                        className: "flex items-center justify-center mb-4"
+                    }, React.createElement('div', {
+                        className: "w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center text-2xl border border-white/30 animate-pulse-slow"
+                    }, "🐾")),
+                    React.createElement('h1', {
+                        key: 'title',
+                        className: "text-4xl font-extrabold text-white mb-2"
+                    }, "Every Pet Deserves a Resting Place"),
+                    React.createElement('p', {
+                        key: 'subtitle',
+                        className: "text-white/85 text-lg mb-6"
+                    }, "Mint a beautiful on-chain memorial. Photo, Video, or Animation. Powered by Arbitrum."),
+                    React.createElement('div', {
+                        key: 'buttons',
+                        className: "flex gap-3 justify-center"
+                    }, [
+                        React.createElement('button', {
+                            key: 'create',
+                            onClick: () => setCurrentView("create"),
+                            className: "bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:from-yellow-300 hover:to-yellow-400 transition-all flex items-center gap-2"
+                        }, [
+                            React.createElement(Plus, { key: 'icon', className: "w-5 h-5" }),
+                            "Create Memorial"
+                        ]),
+                        React.createElement('button', {
+                            key: 'explore',
+                            onClick: () => setCurrentView("gallery"),
+                            className: "bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-semibold transition-all"
+                        }, "Explore Gallery")
+                    ]),
+                    React.createElement('div', {
+                        key: 'networks',
+                        className: "mt-6 text-sm text-white/70"
+                    }, "Live networks: Arbitrum One & Arbitrum Sepolia")
+                ]),
+                React.createElement('div', {
+                    key: 'collections',
+                    className: "space-y-6"
+                }, [
+                    React.createElement('h2', {
+                        key: 'title',
+                        className: "text-3xl font-bold text-white"
+                    }, "Collections"),
+                    React.createElement('div', {
+                        key: 'grid',
+                        className: "grid md:grid-cols-3 gap-6"
+                    }, [
+                        React.createElement('div', {
+                            key: 'founders',
+                            className: "glass backdrop-blur-md bg-white/10 rounded-xl p-6 border border-yellow-400/40"
+                        }, [
+                            React.createElement('div', {
+                                key: 'badge',
+                                className: "text-yellow-300 text-sm mb-2"
+                            }, "🏆 Founders Collection"),
+                            React.createElement('h3', {
+                                key: 'title',
+                                className: "font-semibold text-white"
+                            }, "Founders & Gold Editions"),
+                            React.createElement('p', {
+                                key: 'desc',
+                                className: "text-white/80 mt-1"
+                            }, "Exclusive presale holder benefits with profit sharing.")
+                        ]),
+                        React.createElement('div', {
+                            key: 'premium',
+                            className: "glass backdrop-blur-md bg-white/10 rounded-xl p-6 border border-white/20"
+                        }, [
+                            React.createElement('div', {
+                                key: 'badge',
+                                className: "text-purple-200 text-sm mb-2"
+                            }, "💎 Premium Collections"),
+                            React.createElement('h3', {
+                                key: 'title',
+                                className: "font-semibold text-white"
+                            }, "Silver • Diamond • Characters"),
+                            React.createElement('p', {
+                                key: 'desc',
+                                className: "text-white/80 mt-1"
+                            }, "Beautiful premium memorial designs with enhanced features.")
+                        ]),
+                        React.createElement('div', {
+                            key: 'standard',
+                            className: "glass backdrop-blur-md bg-white/10 rounded-xl p-6 border border-white/20"
+                        }, [
+                            React.createElement('div', {
+                                key: 'badge',
+                                className: "text-blue-200 text-sm mb-2"
+                            }, "✨ Standard Collections"),
+                            React.createElement('h3', {
+                                key: 'title',
+                                className: "font-semibold text-white"
+                            }, "Gemini 1–6 Series"),
+                            React.createElement('p', {
+                                key: 'desc',
+                                className: "text-white/80 mt-1"
+                            }, "Accessible memorial NFTs for every beloved companion.")
+                        ])
+                    ])
+                ]),
+                React.createElement('div', {
+                    key: 'recent',
+                    className: "space-y-6"
+                }, [
+                    React.createElement('div', {
+                        key: 'header',
+                        className: "flex items-center justify-between"
+                    }, [
+                        React.createElement('h2', {
+                            key: 'title',
+                            className: "text-3xl font-bold text-white"
+                        }, "Recent Memorials"),
+                        React.createElement('button', {
+                            key: 'viewAll',
+                            onClick: () => setCurrentView("gallery"),
+                            className: "text-yellow-400 font-medium flex items-center gap-1 hover:text-yellow-300"
+                        }, [
+                            "View All",
+                            React.createElement(ChevronRight, { key: 'icon', className: "w-4 h-4" })
+                        ])
+                    ]),
+                    React.createElement('div', {
+                        key: 'grid',
+                        className: "grid grid-cols-1 md:grid-cols-2 gap-6"
+                    }, memorialTokens.slice(0, 4).map(token => 
+                        React.createElement(MemorialToken, { 
+                            key: token.id, 
+                            token, 
+                            onClick: setSelectedPet, 
+                            compact: true 
+                        })
+                    ))
+                ]),
+                React.createElement('div', {
+                    key: 'stats',
+                    className: "grid grid-cols-3 gap-6"
+                }, [
+                    React.createElement('div', {
+                        key: 'memorials',
+                        className: "glass backdrop-blur-md bg-white/10 rounded-xl p-6 text-center border border-white/20"
+                    }, [
+                        React.createElement('div', {
+                            key: 'number',
+                            className: "text-3xl font-bold text-yellow-400 mb-1"
+                        }, "5T"),
+                        React.createElement('div', {
+                            key: 'label',
+                            className: "text-sm text-white/80"
+                        }, "Total $PIP Supply")
+                    ]),
+                    React.createElement('div', {
+                        key: 'families',
+                        className: "glass backdrop-blur-md bg-white/10 rounded-xl p-6 text-center border border-white/20"
+                    }, [
+                        React.createElement('div', {
+                            key: 'number',
+                            className: "text-3xl font-bold text-purple-300 mb-1"
+                        }, "$20M"),
+                        React.createElement('div', {
+                            key: 'label',
+                            className: "text-sm text-white/80"
+                        }, "Presale Hard Cap")
+                    ]),
+                    React.createElement('div', {
+                        key: 'hearts',
+                        className: "glass backdrop-blur-md bg-white/10 rounded-xl p-6 text-center border border-white/20"
+                    }, [
+                        React.createElement('div', {
+                            key: 'number',
+                            className: "text-3xl font-bold text-blue-300 mb-1"
+                        }, "10%"),
+                        React.createElement('div', {
+                            key: 'label',
+                            className: "text-sm text-white/80"
+                        }, "Profit Share to Holders")
+                    ])
+                ])
+            ]);
+
+            const GalleryView = () => React.createElement('div', {}, [
+                React.createElement('div', {
+                    key: 'header',
+                    className: "flex items-center justify-between mb-6"
+                }, [
+                    React.createElement('button', {
+                        key: 'back',
+                        onClick: () => setCurrentView("home"),
+                        className: "flex items-center gap-2 text-white/80 hover:text-white"
+                    }, [
+                        React.createElement(ArrowLeft, { key: 'icon', className: "w-5 h-5" }),
+                        "Back to Home"
+                    ]),
+                    React.createElement('h2', {
+                        key: 'title',
+                        className: "text-3xl font-bold text-white"
+                    }, "Memorial Gallery")
+                ]),
+                React.createElement('div', {
+                    key: 'grid',
+                    className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                }, memorialTokens.map(token => 
+                    React.createElement(MemorialToken, { 
+                        key: token.id, 
+                        token, 
+                        onClick: setSelectedPet 
+                    })
+                ))
+            ]);
+
+            const CreateView = () => {
+                const st = collectionStyle(form.visualStyle);
+                return React.createElement('div', {}, [
+                    React.createElement('div', {
+                        key: 'header',
+                        className: "flex items-center justify-between mb-6"
+                    }, [
+                        React.createElement('button', {
+                            key: 'back',
+                            onClick: () => setCurrentView("home"),
+                            className: "flex items-center gap-2 text-white/80 hover:text-white"
+                        }, [
+                            React.createElement(ArrowLeft, { key: 'icon', className: "w-5 h-5" }),
+                            "Back to Home"
+                        ]),
+                        React.createElement('h2', {
+                            key: 'title',
+                            className: "text-3xl font-bold text-white"
+                        }, "Create Your Memorial")
+                    ]),
+                    React.createElement('div', {
+                        key: 'content',
+                        className: "max-w-5xl mx-auto"
+                    }, React.createElement('div', {
+                        className: "glass backdrop-blur-md bg-white/10 rounded-2xl p-8 border border-white/20"
+                    }, React.createElement('div', {
+                        className: "space-y-6"
+                    }, [
+                        React.createElement('div', {
+                            key: 'nameDate',
+                            className: "grid md:grid-cols-2 gap-4"
+                        }, [
+                            React.createElement('div', { key: 'name' }, [
+                                React.createElement('div', {
+                                    key: 'label',
+                                    className: "block text-sm mb-2 text-white"
+                                }, "Pet Name *"),
+                                React.createElement('input', {
+                                    key: 'input',
+                                    value: form.petName,
+                                    onChange: (e) => setForm(f => ({ ...f, petName: e.target.value })),
+                                    className: "w-full p-3 rounded-lg bg-white/10 text-white placeholder-white/60 border border-white/30 focus:border-yellow-400 focus:outline-none",
+                                    placeholder: "Enter your pet's name"
+                                })
+                            ]),
+                            React.createElement('div', { key: 'date' }, [
+                                React.createElement('div', {
+                                    key: 'label',
+                                    className: "block text-sm mb-2 text-white"
+                                }, "Memorial Date"),
+                                React.createElement('input', {
+                                    key: 'input',
+                                    type: "date",
+                                    value: form.memorialDate,
+                                    onChange: (e) => setForm(f => ({ ...f, memorialDate: e.target.value })),
+                                    className: "w-full p-3 rounded-lg bg-white/10 text-white border border-white/30 focus:border-yellow-400 focus:outline-none"
+                                })
+                            ])
+                        ]),
+                        React.createElement('div', { key: 'message' }, [
+                            React.createElement('div', {
+                                key: 'label',
+                                className: "block text-sm mb-2 text-white"
+                            }, "Memorial Message"),
+                            React.createElement('textarea', {
+                                key: 'input',
+                                value: form.message,
+                                onChange: (e) => setForm(f => ({ ...f, message: e.target.value })),
+                                className: "w-full p-3 rounded-lg bg-white/10 text-white placeholder-white/60 border border-white/30 focus:border-yellow-400 focus:outline-none h-24",
+                                placeholder: "Share a loving memory or tribute..."
+                            })
+                        ]),
+                        React.createElement('div', {
+                            key: 'options',
+                            className: "grid md:grid-cols-3 gap-4"
+                        }, [
+                            React.createElement('div', { key: 'mediaType' }, [
+                                React.createElement('div', {
+                                    key: 'label',
+                                    className: "block text-sm mb-2 text-white"
+                                }, "Media Type"),
+                                React.createElement('select', {
+                                    key: 'select',
+                                    value: form.mediaType,
+                                    onChange: (e) => setForm(f => ({ ...f, mediaType: Number(e.target.value) })),
+                                    className: "w-full p-3 rounded-lg bg-white/10 text-white border border-white/30 focus:border-yellow-400 focus:outline-none"
+                                }, [
+                                    React.createElement('option', { key: 'photo', value: 0 }, "Photo (0.016 ETH)"),
+                                    React.createElement('option', { key: 'video', value: 1 }, "Video (0.024 ETH)"),
+                                    React.createElement('option', { key: 'animation', value: 2 }, "Animation (0.032 ETH)")
+                                ])
+                            ]),
+                            React.createElement('div', { key: 'mediaURI' }, [
+                                React.createElement('div', {
+                                    key: 'label',
+                                    className: "block text-sm mb-2 text-white"
+                                }, "Media URL (Optional)"),
+                                React.createElement('input', {
+                                    key: 'input',
+                                    value: form.mediaURI,
+                                    onChange: (e) => setForm(f => ({ ...f, mediaURI: e.target.value })),
+                                    className: "w-full p-3 rounded-lg bg-white/10 text-white placeholder-white/60 border border-white/30 focus:border-yellow-400 focus:outline-none",
+                                    placeholder: "https://... or ipfs://..."
+                                }),
+                                React.createElement('div', {
+                                    key: 'help',
+                                    className: "text-xs text-white/60 mt-1"
+                                }, "Leave empty to upload later")
+                            ]),
+                            React.createElement('div', { key: 'style' }, [
+                                React.createElement('div', {
+                                    key: 'label',
+                                    className: "block text-sm mb-2 text-white"
+                                }, "Collection Style"),
+                                React.createElement('select', {
+                                    key: 'select',
+                                    value: form.visualStyle,
+                                    onChange: (e) => setForm(f => ({ ...f, visualStyle: e.target.value })),
+                                    className: "w-full p-3 rounded-lg bg-white/10 text-white border border-white/30 focus:border-yellow-400 focus:outline-none"
+                                }, ["Founders", "Gold", "Silver", "Diamond", "Gemini"].map(v => 
+                                    React.createElement('option', { key: v, value: v }, v)
+                                ))
+                            ])
+                        ]),
+                        React.createElement('div', {
+                            key: 'demo',
+                            className: "bg-white/5 rounded-lg p-4 border border-white/10"
+                        }, [
+                            React.createElement('div', {
+                                key: 'title',
+                                className: "text-sm text-white/90 mb-2"
+                            }, React.createElement('strong', {}, "Demo Mode:"), " This is a preview of the Paws in Peace memorial platform."),
+                            React.createElement('div', {
+                                key: 'desc',
+                                className: "text-xs text-white/70"
+                            }, `Real tokenomics: $PIP launch at ${TOKENOMICS.launchPrice} • ${TOKENOMICS.presaleHardCap} presale cap • Physical cremation centers with profit sharing to token holders.`)
+                        ]),
+                        React.createElement('div', {
+                            key: 'footer',
+                            className: "flex items-center justify-between mt-8 pt-6 border-t border-white/20"
+                        }, [
+                            React.createElement('div', {
+                                key: 'info',
+                                className: "text-sm text-white/80"
+                            }, `Network: ${CHAINS[chainId].label} • Price: ${["0.016", "0.024", "0.032"][form.mediaType]} ETH`),
+                            React.createElement('button', {
+                                key: 'submit',
+                                onClick: handleMint,
+                                className: `px-6 py-3 rounded-lg bg-gradient-to-r ${st.from} ${st.to} text-black font-semibold hover:opacity-90 transition-all`
+                            }, account ? "Create Memorial" : "Connect & Create")
+                        ])
+                    ])))
+                ]);
+            };
+
+            const PetDetailView = () => {
+                if (!selectedPet) return null;
+                const st = collectionStyle(selectedPet.collection);
+                return React.createElement('div', {}, [
+                    React.createElement('div', {
+                        key: 'header',
+                        className: "flex items-center justify-between mb-6"
+                    }, [
+                        React.createElement('button', {
+                            key: 'back',
+                            onClick: () => setSelectedPet(null),
+                            className: "flex items-center gap-2 text-white/80 hover:text-white"
+                        }, [
+                            React.createElement(ArrowLeft, { key: 'icon', className: "w-5 h-5" }),
+                            "Back to Gallery"
+                        ]),
+                        React.createElement('div', {
+                            key: 'actions',
+                            className: "flex gap-2"
+                        }, [
+                            React.createElement('button', {
+                                key: 'share',
+                                className: "p-2 bg-white/10 rounded-lg text-blue-300 hover:bg-white/20 border border-white/30"
+                            }, React.createElement(Share2, { className: "w-5 h-5" })),
+                            React.createElement('button', {
+                                key: 'favorite',
+                                onClick: () => toggleFavorite(selectedPet.id),
+                                className: `p-2 rounded-lg border border-white/30 ${favorites.has(selectedPet.id) ? "bg-pink-500/20 text-pink-300" : "bg-white/10 text-white/60 hover:bg-pink-500/20 hover:text-pink-300"}`
+                            }, React.createElement(Heart, { 
+                                className: `w-5 h-5 ${favorites.has(selectedPet.id) ? "fill-current" : ""}` 
+                            }))
+                        ])
+                    ]),
+                    React.createElement('div', {
+                        key: 'content',
+                        className: "max-w-2xl mx-auto"
+                    }, React.createElement('div', {
+                        className: "glass backdrop-blur-md bg-white/10 rounded-2xl border border-white/20 overflow-hidden"
+                    }, [
+                        React.createElement('div', {
+                            key: 'hero',
+                            className: "bg-gradient-to-br from-white/20 to-white/10 p-12 text-center"
+                        }, [
+                            React.createElement('div', {
+                                key: 'avatar',
+                                className: `w-32 h-32 bg-gradient-to-br ${st.from} ${st.to} rounded-full flex items-center justify-center text-white text-6xl mx-auto mb-6 border border-white/30 animate-pulse-slow`
+                            }, selectedPet.image),
+                            React.createElement('div', {
+                                key: 'nameIcon',
+                                className: "flex items-center justify-center gap-3 mb-4"
+                            }, [
+                                React.createElement('h1', {
+                                    key: 'name',
+                                    className: "text-4xl font-bold text-white"
+                                }, selectedPet.name),
+                                collectionIcon(selectedPet.collection)
+                            ]),
+                            React.createElement('p', {
+                                key: 'breed',
+                                className: "text-xl text-white/80 mb-2"
+                            }, selectedPet.breed),
+                            React.createElement('p', {
+                                key: 'dates',
+                                className: "text-lg text-white/70 font-medium"
+                            }, selectedPet.dates),
+                            React.createElement('div', {
+                                key: 'badge',
+                                className: `inline-block px-4 py-2 rounded-full bg-gradient-to-r ${st.from} ${st.to} text-white font-medium mt-4`
+                            }, selectedPet.collection)
+                        ]),
+                        React.createElement('div', {
+                            key: 'details',
+                            className: "p-8 space-y-6"
+                        }, [
+                            React.createElement('div', {
+                                key: 'message',
+                                className: "text-center"
+                            }, React.createElement('p', {
+                                className: "text-white/90 text-lg italic leading-relaxed"
+                            }, `"${selectedPet.message}"`)),
+                            React.createElement('div', {
+                                key: 'tokenInfo',
+                                className: "border-t border-white/20 pt-6"
+                            }, React.createElement('div', {
+                                className: "grid grid-cols-2 gap-6 text-center"
+                            }, [
+                                React.createElement('div', { key: 'tokenId' }, [
+                                    React.createElement('p', {
+                                        key: 'label',
+                                        className: "text-sm text-white/60 mb-1"
+                                    }, "Token ID"),
+                                    React.createElement('p', {
+                                        key: 'value',
+                                        className: "font-medium text-white"
+                                    }, selectedPet.tokenId)
+                                ]),
+                                React.createElement('div', { key: 'price' }, [
+                                    React.createElement('p', {
+                                        key: 'label',
+                                        className: "text-sm text-white/60 mb-1"
+                                    }, "Mint Price"),
+                                    React.createElement('p', {
+                                        key: 'value',
+                                        className: "font-medium text-yellow-400"
+                                    }, selectedPet.price)
+                                ])
+                            ])),
+                            React.createElement('div', {
+                                key: 'mediaInfo',
+                                className: "border-t border-white/20 pt-6"
+                            }, React.createElement('div', {
+                                className: "grid grid-cols-2 gap-6 text-center"
+                            }, [
+                                React.createElement('div', { key: 'mediaType' }, [
+                                    React.createElement('p', {
+                                        key: 'label',
+                                        className: "text-sm text-white/60 mb-1"
+                                    }, "Media Type"),
+                                    React.createElement('p', {
+                                        key: 'value',
+                                        className: "font-medium text-white"
+                                    }, selectedPet.mediaType)
+                                ]),
+                                React.createElement('div', { key: 'mintDate' }, [
+                                    React.createElement('p', {
+                                        key: 'label',
+                                        className: "text-sm text-white/60 mb-1"
+                                    }, "Minted"),
+                                    React.createElement('p', {
+                                        key: 'value',
+                                        className: "font-medium text-white"
+                                    }, selectedPet.mintDate)
+                                ])
+                            ])),
+                            React.createElement('div', {
+                                key: 'owner',
+                                className: "border-t border-white/20 pt-6 text-center"
+                            }, [
+                                React.createElement('p', {
+                                    key: 'label',
+                                    className: "text-sm text-white/60 mb-1"
+                                }, "Created by"),
+                                React.createElement('p', {
+                                    key: 'value',
+                                    className: "font-medium text-white"
+                                }, selectedPet.owner)
+                            ])
+                        ])
+                    ]))
+                ]);
+            };
+
+            // Main render
+            return React.createElement('div', {
+                className: "min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900"
+            }, [
+                React.createElement(Header, { key: 'header' }),
+                React.createElement('main', {
+                    key: 'main',
+                    className: "max-w-7xl mx-auto px-4 py-8"
+                }, (() => {
+                    if (selectedPet) return React.createElement(PetDetailView);
+                    switch (currentView) {
+                        case "gallery": return React.createElement(GalleryView);
+                        case "create": return React.createElement(CreateView);
+                        default: return React.createElement(HomeView);
+                    }
+                })())
+            ]);
+        };
+
+        // Render the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(PawsInPeaceApp));
+    </script>
 </body>
 </html>
