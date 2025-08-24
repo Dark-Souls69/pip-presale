@@ -1,90 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paws in Peace Memorial</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paws in Peace Memorial • Dual‑Service Demo</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .glass {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-    .animate-float {
-      animation: float 6s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-    .tier-card:hover {
-      transform: scale(1.02);
-    }
-    .selected-tier {
-      border-color: #fbbf24 !important;
-      background: rgba(251, 191, 36, 0.1);
-    }
+    .glass { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .tier-card { transition: transform .2s ease, background .2s ease, border-color .2s ease; }
+    .tier-card:hover { transform: scale(1.02); }
+    .selected-tier { border-color: #fbbf24 !important; background: rgba(251,191,36,.10); }
+    .hidden { display: none; }
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
-  
+<body class="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white">
+
   <!-- Safety Banner -->
-  <div class="w-full bg-black/50 text-white py-2 px-4 text-sm flex items-center gap-2">
-    <span class="opacity-90">🛡️ This is a <strong>public demo</strong>. Never share seed phrases. We will <strong>never DM</strong> you for money.</span>
-  </div>
+  <div class="w-full bg-black/50 py-2 px-4 text-sm">🛡️ Public demo — never share seed phrases. We will <strong>never DM</strong> you for money.</div>
 
   <!-- Header -->
   <header class="glass backdrop-blur-md bg-white/10 border-b border-white/15">
     <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
+      <button class="flex items-center gap-3" id="logoBtn">
         <div class="w-10 h-10 rounded-full bg-purple-600 grid place-items-center text-2xl">🐾</div>
-        <div class="font-bold text-xl text-white">Paws in Peace</div>
-      </div>
+        <div class="font-bold text-xl">Paws in Peace</div>
+      </button>
       <div class="flex items-center gap-3">
-        <button onclick="showGallery()" class="px-3 py-2 rounded-lg bg-white/10 text-white border border-white/30 hover:bg-white/20">Gallery</button>
-        <select class="px-3 py-2 rounded-lg bg-white/10 text-white border border-white/30">
-          <option>Arbitrum Network</option>
-          <option>Ethereum Network</option>
+        <button id="galleryBtn" class="px-3 py-2 rounded-lg bg-white/10 border border-white/30 hover:bg-white/20">Gallery</button>
+        <select id="networkSelect" class="px-3 py-2 rounded-lg bg-white/10 border border-white/30">
+          <option value="arbitrum">Arbitrum Network</option>
+          <option value="ethereum">Ethereum Network</option>
         </select>
-        <button class="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white">
-          👛 Connect Wallet
-        </button>
+        <button id="connectBtn" class="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700">👛 Connect Wallet</button>
       </div>
     </div>
   </header>
 
-  <!-- Main Content Container -->
+  <!-- Main -->
   <main class="max-w-7xl mx-auto px-4 py-8">
-
     <!-- HOME VIEW -->
-    <div id="homeView" class="space-y-8">
-      <!-- Hero Section -->
+    <section id="homeView" class="space-y-8">
       <div class="glass rounded-2xl p-8 text-center border border-white/20 animate-float">
-        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center text-2xl border border-white/30 mx-auto mb-4">🐾</div>
-        <h1 class="text-4xl font-extrabold text-white mb-2">Honor Your Pet's Journey</h1>
-        <p class="text-white/85 text-lg mb-6">Create beautiful on-chain memories for pets who are still with us, or eternal memorials for those who have passed.</p>
-        
-        <!-- Two Main Options -->
+        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full grid place-items-center text-2xl border border-white/30 mx-auto mb-4">🐾</div>
+        <h1 class="text-4xl font-extrabold mb-2">Honor Your Pet's Journey</h1>
+        <p class="text-white/85 text-lg mb-6">Create beautiful on‑chain memories for pets who are still with us, or eternal memorials for those who have passed.</p>
         <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-8">
-          <div onclick="showLifetimeMemories()" class="glass rounded-xl p-6 border-2 border-green-400/40 cursor-pointer hover:bg-green-400/10 transition-all group">
+          <button id="lifetimeBtn" class="glass rounded-xl p-6 border-2 border-green-400/40 hover:bg-green-400/10 transition-all text-left">
             <div class="text-4xl mb-4">🌟</div>
-            <h3 class="text-xl font-bold text-white mb-2">Lifetime Memories</h3>
+            <h3 class="text-xl font-bold mb-2">Lifetime Memories</h3>
             <p class="text-white/80 text-sm mb-4">Create cherished memories while your pet is still with you. Capture their best moments, milestones, and daily joys.</p>
-            <div class="text-green-400 font-semibold group-hover:text-green-300">Start Creating →</div>
-          </div>
-          
-          <div onclick="showRestingMemorial()" class="glass rounded-xl p-6 border-2 border-blue-400/40 cursor-pointer hover:bg-blue-400/10 transition-all group">
+            <div class="text-green-400 font-semibold">Start Creating →</div>
+          </button>
+          <button id="restingBtn" class="glass rounded-xl p-6 border-2 border-blue-400/40 hover:bg-blue-400/10 transition-all text-left">
             <div class="text-4xl mb-4">🕊️</div>
-            <h3 class="text-xl font-bold text-white mb-2">Resting Memorial</h3>
-            <p class="text-white/80 text-sm mb-4">Honor pets who have crossed the rainbow bridge. Create a permanent, beautiful tribute to their memory.</p>
-            <div class="text-blue-400 font-semibold group-hover:text-blue-300">Create Memorial →</div>
-          </div>
+            <h3 class="text-xl font-bold mb-2">Resting Memorial</h3>
+            <p class="text-white/80 text-sm mb-4">Honor pets who have crossed the rainbow bridge with a permanent, beautiful tribute.</p>
+            <div class="text-blue-400 font-semibold">Create Memorial →</div>
+          </button>
         </div>
       </div>
 
-      <!-- Quick Stats -->
-      <div class="grid grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="glass rounded-xl p-6 text-center border border-white/20">
           <div class="text-3xl font-bold text-yellow-400 mb-1">1,247</div>
           <div class="text-sm text-white/80">Total Created</div>
@@ -98,58 +76,56 @@
           <div class="text-sm text-white/80">Resting Memorials</div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- LIFETIME MEMORIES VIEW -->
-    <div id="lifetimeView" class="hidden space-y-8">
+    <!-- LIFETIME VIEW -->
+    <section id="lifetimeView" class="hidden space-y-8">
       <div class="flex items-center justify-between">
-        <button onclick="showHome()" class="flex items-center gap-2 text-white/80 hover:text-white">‹ Back to Home</button>
-        <h2 class="text-3xl font-bold text-white">🌟 Lifetime Memories</h2>
+        <button class="flex items-center gap-2 text-white/80 hover:text-white" id="backFromLifetime">‹ Back to Home</button>
+        <h2 class="text-3xl font-bold">🌟 Lifetime Memories</h2>
         <div></div>
       </div>
-      
+
       <div class="glass rounded-2xl p-6 border border-green-400/30">
         <p class="text-white/90 text-center mb-6">Create beautiful memories while your pet is healthy and happy. Perfect for celebrating milestones, birthdays, or just everyday joy!</p>
-        
-        <!-- Step 1: Choose Design Template -->
+
+        <!-- Step 1: Template -->
         <div class="space-y-6">
-          <h3 class="text-xl font-semibold text-white">Step 1: Choose Design Template</h3>
+          <h3 class="text-xl font-semibold">Step 1: Choose Design Template</h3>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="tier-card glass rounded-lg p-4 border border-white/20 cursor-pointer text-center" onclick="selectTemplate('playful')">
+            <button class="tier-card glass rounded-lg p-4 border border-white/20 text-center" data-template="playful">
               <div class="text-3xl mb-2">🎾</div>
-              <div class="text-white font-medium">Playful</div>
+              <div class="font-medium">Playful</div>
               <div class="text-white/60 text-sm">Fun & Energetic</div>
-            </div>
-            <div class="tier-card glass rounded-lg p-4 border border-white/20 cursor-pointer text-center" onclick="selectTemplate('elegant')">
+            </button>
+            <button class="tier-card glass rounded-lg p-4 border border-white/20 text-center" data-template="elegant">
               <div class="text-3xl mb-2">✨</div>
-              <div class="text-white font-medium">Elegant</div>
+              <div class="font-medium">Elegant</div>
               <div class="text-white/60 text-sm">Sophisticated</div>
-            </div>
-            <div class="tier-card glass rounded-lg p-4 border border-white/20 cursor-pointer text-center" onclick="selectTemplate('cute')">
+            </button>
+            <button class="tier-card glass rounded-lg p-4 border border-white/20 text-center" data-template="cute">
               <div class="text-3xl mb-2">🌈</div>
-              <div class="text-white font-medium">Cute</div>
+              <div class="font-medium">Cute</div>
               <div class="text-white/60 text-sm">Adorable & Sweet</div>
-            </div>
-            <div class="tier-card glass rounded-lg p-4 border border-white/20 cursor-pointer text-center" onclick="selectTemplate('nature')">
+            </button>
+            <button class="tier-card glass rounded-lg p-4 border border-white/20 text-center" data-template="nature">
               <div class="text-3xl mb-2">🌿</div>
-              <div class="text-white font-medium">Nature</div>
+              <div class="font-medium">Nature</div>
               <div class="text-white/60 text-sm">Outdoorsy</div>
-            </div>
+            </button>
           </div>
         </div>
 
-        <!-- Step 2: Select Tier & Features -->
+        <!-- Step 2: Tier -->
         <div class="space-y-6 mt-8">
-          <h3 class="text-xl font-semibold text-white">Step 2: Select Tier & Features</h3>
+          <h3 class="text-xl font-semibold">Step 2: Select Tier & Features</h3>
           <div class="grid md:grid-cols-3 gap-6">
-            
-            <!-- Basic Tier -->
-            <div class="tier-card glass rounded-xl p-6 border border-white/20 cursor-pointer" onclick="selectTier('basic', 0.02)">
+            <button class="tier-card glass rounded-xl p-6 border border-white/20 text-left" data-tier="basic" data-price="0.02">
               <div class="text-center mb-4">
                 <div class="text-2xl mb-2">🥉</div>
-                <h4 class="text-lg font-bold text-white">Basic Memory</h4>
+                <h4 class="text-lg font-bold">Basic Memory</h4>
                 <div class="text-yellow-400 font-bold text-xl">0.02 ETH</div>
-                <div class="text-white/60 text-sm">~$50 USD</div>
+                <div class="text-white/60 text-sm">~$<span class="usd">—</span></div>
               </div>
               <ul class="text-white/80 text-sm space-y-2">
                 <li>✓ 1 Photo or Video</li>
@@ -158,15 +134,14 @@
                 <li>✓ Short Message (50 words)</li>
                 <li>✓ Standard Quality</li>
               </ul>
-            </div>
+            </button>
 
-            <!-- Premium Tier -->
-            <div class="tier-card glass rounded-xl p-6 border-2 border-yellow-400/60 cursor-pointer" onclick="selectTier('premium', 0.05)">
+            <button class="tier-card glass rounded-xl p-6 border-2 border-yellow-400/60 text-left" data-tier="premium" data-price="0.05">
               <div class="text-center mb-4">
                 <div class="text-2xl mb-2">🥈</div>
-                <h4 class="text-lg font-bold text-white">Premium Memory</h4>
+                <h4 class="text-lg font-bold">Premium Memory</h4>
                 <div class="text-yellow-400 font-bold text-xl">0.05 ETH</div>
-                <div class="text-white/60 text-sm">~$125 USD</div>
+                <div class="text-white/60 text-sm">~$<span class="usd">—</span></div>
                 <div class="bg-yellow-400/20 text-yellow-300 text-xs px-2 py-1 rounded mt-1">POPULAR</div>
               </div>
               <ul class="text-white/80 text-sm space-y-2">
@@ -177,15 +152,14 @@
                 <li>✓ HD Quality</li>
                 <li>✓ Music Background</li>
               </ul>
-            </div>
+            </button>
 
-            <!-- Deluxe Tier -->
-            <div class="tier-card glass rounded-xl p-6 border border-purple-400/40 cursor-pointer" onclick="selectTier('deluxe', 0.1)">
+            <button class="tier-card glass rounded-xl p-6 border border-purple-400/40 text-left" data-tier="deluxe" data-price="0.10">
               <div class="text-center mb-4">
                 <div class="text-2xl mb-2">🥇</div>
-                <h4 class="text-lg font-bold text-white">Deluxe Memory</h4>
+                <h4 class="text-lg font-bold">Deluxe Memory</h4>
                 <div class="text-yellow-400 font-bold text-xl">0.10 ETH</div>
-                <div class="text-white/60 text-sm">~$250 USD</div>
+                <div class="text-white/60 text-sm">~$<span class="usd">—</span></div>
               </div>
               <ul class="text-white/80 text-sm space-y-2">
                 <li>✓ Unlimited Media</li>
@@ -196,85 +170,82 @@
                 <li>✓ Custom Music</li>
                 <li>✓ Shareable Links</li>
               </ul>
-            </div>
+            </button>
           </div>
         </div>
 
         <div class="mt-8 text-center">
-          <button onclick="showServiceSelection('lifetime')" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:from-green-400 hover:to-green-500 transition-all">
+          <button id="toServiceFromLifetime" class="bg-gradient-to-r from-green-500 to-green-600 px-8 py-3 rounded-lg font-semibold text-lg hover:from-green-400 hover:to-green-500 disabled:opacity-50" disabled>
             Continue to Service Selection →
           </button>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- RESTING MEMORIAL VIEW -->
-    <div id="restingView" class="hidden space-y-8">
+    <!-- RESTING VIEW -->
+    <section id="restingView" class="hidden space-y-8">
       <div class="flex items-center justify-between">
-        <button onclick="showHome()" class="flex items-center gap-2 text-white/80 hover:text-white">‹ Back to Home</button>
-        <h2 class="text-3xl font-bold text-white">🕊️ Resting Memorial</h2>
+        <button class="flex items-center gap-2 text-white/80 hover:text-white" id="backFromResting">‹ Back to Home</button>
+        <h2 class="text-3xl font-bold">🕊️ Resting Memorial</h2>
         <div></div>
       </div>
-      
+
       <div class="glass rounded-2xl p-6 border border-blue-400/30">
-        <p class="text-white/90 text-center mb-6">Create a beautiful, eternal tribute for a beloved pet who has crossed the rainbow bridge. Honor their memory with dignity and love.</p>
-        
-        <!-- Step 1: Choose Memorial Style -->
+        <p class="text-white/90 text-center mb-6">Create a beautiful, eternal tribute for a beloved pet who has crossed the rainbow bridge.</p>
+
+        <!-- Step 1: Style -->
         <div class="space-y-6">
-          <h3 class="text-xl font-semibold text-white">Step 1: Choose Memorial Style</h3>
+          <h3 class="text-xl font-semibold">Step 1: Choose Memorial Style</h3>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="tier-card glass rounded-lg p-4 border border-white/20 cursor-pointer text-center" onclick="selectTemplate('peaceful')">
+            <button class="tier-card glass rounded-lg p-4 border border-white/20 text-center" data-template="peaceful">
               <div class="text-3xl mb-2">🌸</div>
-              <div class="text-white font-medium">Peaceful</div>
+              <div class="font-medium">Peaceful</div>
               <div class="text-white/60 text-sm">Serene & Gentle</div>
-            </div>
-            <div class="tier-card glass rounded-lg p-4 border border-white/20 cursor-pointer text-center" onclick="selectTemplate('garden')">
+            </button>
+            <button class="tier-card glass rounded-lg p-4 border border-white/20 text-center" data-template="garden">
               <div class="text-3xl mb-2">🌹</div>
-              <div class="text-white font-medium">Garden</div>
+              <div class="font-medium">Garden</div>
               <div class="text-white/60 text-sm">Natural Beauty</div>
-            </div>
-            <div class="tier-card glass rounded-lg p-4 border border-white/20 cursor-pointer text-center" onclick="selectTemplate('heavenly')">
+            </button>
+            <button class="tier-card glass rounded-lg p-4 border border-white/20 text-center" data-template="heavenly">
               <div class="text-3xl mb-2">☁️</div>
-              <div class="text-white font-medium">Heavenly</div>
+              <div class="font-medium">Heavenly</div>
               <div class="text-white/60 text-sm">Spiritual & Pure</div>
-            </div>
-            <div class="tier-card glass rounded-lg p-4 border border-white/20 cursor-pointer text-center" onclick="selectTemplate('classic')">
+            </button>
+            <button class="tier-card glass rounded-lg p-4 border border-white/20 text-center" data-template="classic">
               <div class="text-3xl mb-2">🏛️</div>
-              <div class="text-white font-medium">Classic</div>
+              <div class="font-medium">Classic</div>
               <div class="text-white/60 text-sm">Timeless & Noble</div>
-            </div>
+            </button>
           </div>
         </div>
 
-        <!-- Step 2: Memorial Tiers -->
+        <!-- Step 2: Package -->
         <div class="space-y-6 mt-8">
-          <h3 class="text-xl font-semibold text-white">Step 2: Select Memorial Package</h3>
+          <h3 class="text-xl font-semibold">Step 2: Select Memorial Package</h3>
           <div class="grid md:grid-cols-3 gap-6">
-            
-            <!-- Simple Memorial -->
-            <div class="tier-card glass rounded-xl p-6 border border-white/20 cursor-pointer" onclick="selectTier('simple', 0.03)">
+            <button class="tier-card glass rounded-xl p-6 border border-white/20 text-left" data-tier="simple" data-price="0.03">
               <div class="text-center mb-4">
                 <div class="text-2xl mb-2">🕯️</div>
-                <h4 class="text-lg font-bold text-white">Simple Memorial</h4>
+                <h4 class="text-lg font-bold">Simple Memorial</h4>
                 <div class="text-yellow-400 font-bold text-xl">0.03 ETH</div>
-                <div class="text-white/60 text-sm">~$75 USD</div>
+                <div class="text-white/60 text-sm">~$<span class="usd">—</span></div>
               </div>
               <ul class="text-white/80 text-sm space-y-2">
                 <li>✓ Memorial Photo</li>
                 <li>✓ Pet Details (name, dates)</li>
                 <li>✓ Tribute Message</li>
                 <li>✓ Basic Memorial Design</li>
-                <li>✓ Permanent On-Chain Storage</li>
+                <li>✓ Permanent On‑Chain Storage</li>
               </ul>
-            </div>
+            </button>
 
-            <!-- Complete Memorial -->
-            <div class="tier-card glass rounded-xl p-6 border-2 border-blue-400/60 cursor-pointer" onclick="selectTier('complete', 0.08)">
+            <button class="tier-card glass rounded-xl p-6 border-2 border-blue-400/60 text-left" data-tier="complete" data-price="0.08">
               <div class="text-center mb-4">
                 <div class="text-2xl mb-2">💙</div>
-                <h4 class="text-lg font-bold text-white">Complete Memorial</h4>
+                <h4 class="text-lg font-bold">Complete Memorial</h4>
                 <div class="text-yellow-400 font-bold text-xl">0.08 ETH</div>
-                <div class="text-white/60 text-sm">~$200 USD</div>
+                <div class="text-white/60 text-sm">~$<span class="usd">—</span></div>
                 <div class="bg-blue-400/20 text-blue-300 text-xs px-2 py-1 rounded mt-1">RECOMMENDED</div>
               </div>
               <ul class="text-white/80 text-sm space-y-2">
@@ -285,15 +256,14 @@
                 <li>✓ Background Music</li>
                 <li>✓ Shareable Memorial Link</li>
               </ul>
-            </div>
+            </button>
 
-            <!-- Legacy Memorial -->
-            <div class="tier-card glass rounded-xl p-6 border border-gold-400/40 cursor-pointer" onclick="selectTier('legacy', 0.15)">
+            <button class="tier-card glass rounded-xl p-6 border border-purple-400/40 text-left" data-tier="legacy" data-price="0.15">
               <div class="text-center mb-4">
                 <div class="text-2xl mb-2">👑</div>
-                <h4 class="text-lg font-bold text-white">Legacy Memorial</h4>
+                <h4 class="text-lg font-bold">Legacy Memorial</h4>
                 <div class="text-yellow-400 font-bold text-xl">0.15 ETH</div>
-                <div class="text-white/60 text-sm">~$375 USD</div>
+                <div class="text-white/60 text-sm">~$<span class="usd">—</span></div>
               </div>
               <ul class="text-white/80 text-sm space-y-2">
                 <li>✓ Everything in Complete</li>
@@ -304,184 +274,400 @@
                 <li>✓ Anniversary Reminders</li>
                 <li>✓ Physical Memorial Certificate</li>
               </ul>
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-8 text-center">
+          <button id="toServiceFromResting" class="bg-gradient-to-r from-blue-500 to-blue-600 px-8 py-3 rounded-lg font-semibold text-lg hover:from-blue-400 hover:to-blue-500 disabled:opacity-50" disabled>
+            Continue to Service Selection →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICE SELECTION VIEW -->
+    <section id="serviceSelectionView" class="hidden space-y-8">
+      <div class="flex items-center justify-between">
+        <button id="backFromService" class="flex items-center gap-2 text-white/80 hover:text-white">‹ Back</button>
+        <h2 class="text-3xl font-bold">Choose Your Service</h2>
+        <div></div>
+      </div>
+
+      <div class="glass rounded-2xl p-8 border border-white/20">
+        <p class="text-white/90 text-center mb-8 text-lg">How would you like to create your memorial NFT?</p>
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <button class="tier-card glass rounded-xl p-6 border-2 border-purple-400/40 hover:bg-purple-400/10" data-service="self">
+            <div class="text-center mb-6">
+              <div class="text-5xl mb-4">🔧</div>
+              <h3 class="text-xl font-bold mb-2">Self‑Service Minting</h3>
+              <div class="bg-purple-400/20 text-purple-300 text-sm px-3 py-1 rounded-full inline-block mb-4">For Crypto Experts</div>
+            </div>
+            <ul class="text-white/80 text-sm space-y-3 mb-6">
+              <li>✓ Full control over the minting process</li>
+              <li>✓ Direct blockchain interaction</li>
+              <li>✓ No service fee</li>
+              <li>✓ Immediate NFT ownership</li>
+            </ul>
+            <div class="text-purple-300 font-semibold text-center">I'll Mint It Myself →</div>
+          </button>
+
+          <button class="tier-card glass rounded-xl p-6 border-2 border-green-400/40 hover:bg-green-400/10" data-service="full">
+            <div class="text-center mb-6">
+              <div class="text-5xl mb-4">🤝</div>
+              <h3 class="text-xl font-bold mb-2">Full Service</h3>
+              <div class="bg-green-400/20 text-green-300 text-sm px-3 py-1 rounded-full inline-block mb-4">We Handle Everything</div>
+            </div>
+            <ul class="text-white/80 text-sm space-y-3 mb-6">
+              <li>✓ We mint the NFT for you</li>
+              <li>✓ No technical knowledge needed</li>
+              <li>✓ Professional design assistance</li>
+              <li>✓ Quality assurance & support</li>
+            </ul>
+            <div class="text-green-300 font-semibold text-center">Create It For Me →</div>
+          </button>
+        </div>
+
+        <!-- Dynamic Pricing Summary -->
+        <div class="mt-10 glass rounded-xl p-6 border border-white/20">
+          <h4 class="text-lg font-semibold mb-4 text-center">Pricing Summary</h4>
+          <div class="grid md:grid-cols-3 gap-4 text-sm">
+            <div class="glass rounded-lg p-4 border border-white/10">
+              <div class="text-white/60">Selected Package</div>
+              <div class="font-semibold" id="summaryPackage">—</div>
+            </div>
+            <div class="glass rounded-lg p-4 border border-white/10">
+              <div class="text-white/60">Base Price</div>
+              <div class="font-semibold"><span id="baseEth">—</span> ETH • ~$<span id="baseUsd">—</span></div>
+            </div>
+            <div class="glass rounded-lg p-4 border border-white/10">
+              <div class="text-white/60">Full‑Service Fee</div>
+              <div class="font-semibold">+ 0.01 ETH • ~$<span id="feeUsd">—</span></div>
+            </div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4 mt-4 text-center">
+            <div class="glass rounded-lg p-4 border border-white/10">
+              <div class="text-white/60">Total (Self‑Service)</div>
+              <div class="text-xl font-bold"><span id="totalSelfEth">—</span> ETH • ~$<span id="totalSelfUsd">—</span></div>
+            </div>
+            <div class="glass rounded-lg p-4 border border-white/10">
+              <div class="text-white/60">Total (Full Service)</div>
+              <div class="text-xl font-bold"><span id="totalFullEth">—</span> ETH • ~$<span id="totalFullUsd">—</span></div>
             </div>
           </div>
         </div>
 
         <div class="mt-8 text-center">
-          <button onclick="showServiceSelection('resting')" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:from-blue-400 hover:to-blue-500 transition-all">
-            Continue to Service Selection →
+          <button id="serviceContinue" class="bg-gradient-to-r from-purple-500 to-purple-600 px-8 py-3 rounded-lg font-semibold text-lg hover:from-purple-400 hover:to-purple-500 disabled:opacity-50" disabled>
+            Continue →
           </button>
         </div>
-      </div>
-    </div>
 
-<!-- SERVICE SELECTION VIEW -->
-<div id="serviceSelectionView" class="hidden space-y-8">
-  <div class="flex items-center justify-between">
-    <button onclick="goBackFromServiceSelection()" class="flex items-center gap-2 text-white/80 hover:text-white">‹ Back</button>
-    <h2 class="text-3xl font-bold text-white">Choose Your Service</h2>
-    <div></div>
-  </div>
-  
-  <div class="glass rounded-2xl p-8 border border-white/20">
-    <p class="text-white/90 text-center mb-8 text-lg">How would you like to create your memorial NFT?</p>
-    
-    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-      
-      <!-- Self-Service Option -->
-      <div onclick="selectServiceType('self')" class="tier-card glass rounded-xl p-6 border-2 border-purple-400/40 cursor-pointer hover:bg-purple-400/10 transition-all group">
-        <div class="text-center mb-6">
-          <div class="text-5xl mb-4">🔧</div>
-          <h3 class="text-xl font-bold text-white mb-2">Self-Service Minting</h3>
-          <div class="bg-purple-400/20 text-purple-300 text-sm px-3 py-1 rounded-full inline-block mb-4">For Crypto Experts</div>
-        </div>
-        
-        <ul class="text-white/80 text-sm space-y-3 mb-6">
-          <li class="flex items-start gap-2">
-            <span class="text-green-400 mt-1">✓</span>
-            <span>Full control over the minting process</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="text-green-400 mt-1">✓</span>
-            <span>Direct blockchain interaction</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="text-green-400 mt-1">✓</span>
-            <span>Lower fees (no service charges)</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="text-green-400 mt-1">✓</span>
-            <span>Immediate NFT ownership</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="text-green-400 mt-1">✓</span>
-            <span>Access to smart contract functions</span>
-          </li>
-        </ul>
-
-        <div class="bg-yellow-400/10 border border-yellow-400/30 rounded-lg p-3 mb-4">
-          <div class="text-yellow-400 text-sm font-semibold mb-1">Requirements:</div>
-          <div class="text-white/70 text-xs">
-            • Connected Web3 wallet<br>
-            • Basic understanding of NFTs<br>
-            • Comfortable with blockchain transactions
+        <!-- Comparison Table -->
+        <div class="mt-10 glass rounded-xl p-6 border border-white/20">
+          <h4 class="text-lg font-semibold mb-4 text-center">Service Comparison</h4>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/20">
+                  <th class="text-left text-white/80 pb-2">Feature</th>
+                  <th class="text-center text-white/80 pb-2">Self‑Service</th>
+                  <th class="text-center text-white/80 pb-2">Full Service</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-white/10">
+                  <td class="py-2">Technical Knowledge</td>
+                  <td class="text-center text-yellow-400">Required</td>
+                  <td class="text-center text-green-400">Not Required</td>
+                </tr>
+                <tr class="border-b border-white/10">
+                  <td class="py-2">Processing Time</td>
+                  <td class="text-center text-green-400">Immediate</td>
+                  <td class="text-center text-blue-400">2–3 business days</td>
+                </tr>
+                <tr class="border-b border-white/10">
+                  <td class="py-2">Additional Fee</td>
+                  <td class="text-center">None</td>
+                  <td class="text-center text-yellow-400">+0.01 ETH</td>
+                </tr>
+                <tr>
+                  <td class="py-2">Support Level</td>
+                  <td class="text-center">Basic</td>
+                  <td class="text-center text-green-400">Full</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-
-        <div class="text-purple-400 font-semibold group-hover:text-purple-300 text-center">
-          I'll Mint It Myself →
-        </div>
       </div>
-      
-      <!-- Full Service Option -->
-      <div onclick="selectServiceType('full')" class="tier-card glass rounded-xl p-6 border-2 border-green-400/40 cursor-pointer hover:bg-green-400/10 transition-all group">
-        <div class="text-center mb-6">
-          <div class="text-5xl mb-4">🤝</div>
-          <h3 class="text-xl font-bold text-white mb-2">Full Service</h3>
-          <div class="bg-green-400/20 text-green-300 text-sm px-3 py-1 rounded-full inline-block mb-4">We Handle Everything</div>
-        </div>
-        
-        <ul class="text-white/80 text-sm space-y-3 mb-6">
-          <li class="flex items-start gap-2">
-            <span class="text-green-400 mt-1">✓</span>
-            <span>We mint the NFT for you</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="text-green-400 mt-1">✓</span>
-            <span>No technical knowledge needed</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="text-green-400 mt-1">✓</span>
-            <span>Professional design assistance</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="text-green-400 mt-1">✓</span>
-            <span>Quality assurance & review</span>
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="text-green-400 mt-1">✓</span>
-            <span>Email delivery & instructions</span>
-          </li>
-        </ul>
+    </section>
 
-        <div class="bg-blue-400/10 border border-blue-400/30 rounded-lg p-3 mb-4">
-          <div class="text-blue-400 text-sm font-semibold mb-1">Includes:</div>
-          <div class="text-white/70 text-xs">
-            • Payment via card or crypto<br>
-            • 2-3 business day delivery<br>
-            • Step-by-step wallet setup help<br>
-            • Ongoing support
+    <!-- CUSTOMIZATION VIEW -->
+    <section id="customizationView" class="hidden space-y-8">
+      <div class="flex items-center justify-between">
+        <button id="backFromCustomization" class="flex items-center gap-2 text-white/80 hover:text-white">‹ Back</button>
+        <h2 id="customizationTitle" class="text-3xl font-bold">Customize Your Memorial</h2>
+        <div></div>
+      </div>
+
+      <div class="glass rounded-2xl p-8 border border-white/20">
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+          <label class="block">
+            <span class="block text-sm mb-2">Pet Name *</span>
+            <input id="petName" class="w-full p-3 rounded-lg bg-white/10 placeholder-white/60 border border-white/30 focus:border-yellow-400 focus:outline-none" placeholder="Enter your pet's name" />
+          </label>
+          <label class="block">
+            <span class="block text-sm mb-2">Pet Type</span>
+            <select id="petType" class="w-full p-3 rounded-lg bg-white/10 border border-white/30 focus:border-yellow-400 focus:outline-none">
+              <option>Dog</option>
+              <option>Cat</option>
+              <option>Bird</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label class="block md:col-span-2">
+            <span class="block text-sm mb-2">Message</span>
+            <textarea id="message" class="w-full p-3 rounded-lg bg-white/10 placeholder-white/60 border border-white/30 focus:border-yellow-400 focus:outline-none h-24" placeholder="Share a loving memory or tribute..."></textarea>
+          </label>
+          <label class="block">
+            <span class="block text-sm mb-2">Memorial Date</span>
+            <input id="memorialDate" type="date" class="w-full p-3 rounded-lg bg-white/10 border border-white/30 focus:border-yellow-400 focus:outline-none" />
+          </label>
+          <label class="block">
+            <span class="block text-sm mb-2">Media URL (optional)</span>
+            <input id="mediaUrl" class="w-full p-3 rounded-lg bg-white/10 placeholder-white/60 border border-white/30 focus:border-yellow-400 focus:outline-none" placeholder="https://... or ipfs://..." />
+          </label>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 items-start">
+          <div class="glass rounded-xl p-6 border border-white/10">
+            <h3 class="font-semibold text-lg mb-3">Your Selection</h3>
+            <div class="text-sm grid grid-cols-2 gap-2">
+              <div class="text-white/60">Flow</div><div id="selFlow">—</div>
+              <div class="text-white/60">Template</div><div id="selTemplate">—</div>
+              <div class="text-white/60">Package</div><div id="selPackage">—</div>
+              <div class="text-white/60">Service</div><div id="selService">—</div>
+            </div>
+            <div class="mt-4 border-t border-white/10 pt-4 text-sm">
+              <div class="text-white/60">Total</div>
+              <div class="text-xl font-bold"><span id="selTotalEth">—</span> ETH • ~$<span id="selTotalUsd">—</span></div>
+            </div>
+          </div>
+
+          <div class="glass rounded-xl p-6 border border-white/10">
+            <h3 class="font-semibold text-lg mb-3">Next Step</h3>
+            <div id="fullServiceForm" class="hidden space-y-3">
+              <label class="block">
+                <span class="block text-sm mb-1">Contact Email *</span>
+                <input id="contactEmail" class="w-full p-3 rounded-lg bg-white/10 border border-white/30 focus:border-yellow-400 focus:outline-none" placeholder="you@example.com" />
+              </label>
+              <label class="block">
+                <span class="block text-sm mb-1">Notes / Special requests</span>
+                <textarea id="notes" class="w-full p-3 rounded-lg bg-white/10 border border-white/30 focus:border-yellow-400 focus:outline-none h-20" placeholder="Optional"></textarea>
+              </label>
+              <p class="text-xs text-white/60">Delivery in 2–3 business days. We'll email updates and a preview link.</p>
+            </div>
+            <button id="finalCta" class="mt-2 w-full bg-gradient-to-r from-purple-500 to-purple-600 px-6 py-3 rounded-lg font-semibold hover:from-purple-400 hover:to-purple-500">Continue</button>
           </div>
         </div>
-
-        <div class="text-green-400 font-semibold group-hover:text-green-300 text-center">
-          Create It For Me →
-        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Service Comparison -->
-    <div class="mt-10 glass rounded-xl p-6 border border-white/20">
-      <h4 class="text-lg font-semibold text-white mb-4 text-center">Service Comparison</h4>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-white/20">
-              <th class="text-left text-white/80 pb-2">Feature</th>
-              <th class="text-center text-white/80 pb-2">Self-Service</th>
-              <th class="text-center text-white/80 pb-2">Full Service</th>
-            </tr>
-          </thead>
-          <tbody class="space-y-2">
-            <tr class="border-b border-white/10">
-              <td class="text-white py-2">Technical Knowledge Required</td>
-              <td class="text-center py-2 text-yellow-400">Yes</td>
-              <td class="text-center py-2 text-green-400">No</td>
-            </tr>
-            <tr class="border-b border-white/10">
-              <td class="text-white py-2">Processing Time</td>
-              <td class="text-center py-2 text-green-400">Immediate</td>
-              <td class="text-center py-2 text-blue-400">2-3 days</td>
-            </tr>
-            <tr class="border-b border-white/10">
-              <td class="text-white py-2">Additional Service Fee</td>
-              <td class="text-center py-2 text-green-400">None</td>
-              <td class="text-center py-2 text-yellow-400">+0.01 ETH</td>
-            </tr>
-            <tr class="border-b border-white/10">
-              <td class="text-white py-2">Support Level</td>
-              <td class="text-center py-2 text-yellow-400">Basic</td>
-              <td class="text-center py-2 text-green-400">Full</td>
-            </tr>
-          </tbody>
-        </table>
+    <!-- GALLERY VIEW (simple demo) -->
+    <section id="galleryView" class="hidden space-y-8">
+      <div class="flex items-center justify-between">
+        <button id="backFromGallery" class="flex items-center gap-2 text-white/80 hover:text-white">‹ Back to Home</button>
+        <h2 class="text-3xl font-bold">Memorial Gallery</h2>
+        <div></div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- CUSTOMIZATION VIEW -->
-<div id="customizationView" class="hidden space-y-8">
-  <div class="flex items-center justify-between">
-    <button onclick="goBackFromCustomization()" class="flex items-center gap-2 text-white/80 hover:text-white">‹ Back</button>
-    <h2 class="text-3xl font-bold text-white" id="customizationTitle">Customize Your Memorial</h2>
-    <div></div>
-  </div>
-  
-  <div class="glass rounded-2xl p-8 border border-white/20">
-    <!-- Pet Details Form -->
-    <div class="grid md:grid-cols-2 gap-6 mb-8">
-      <label class="block">
-        <span class="block text-sm mb-2 text-white">Pet Name *</span>
-        <input id="petName" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-white/60 border border-white/30 focus:border-yellow-400 focus:outline-none" placeholder="Enter your pet's name">
-      </label>
-      <label class="block">
-        <span class="block text-sm mb-2 text-white">Pet Type</span>
-        <select id="petType" class="w-full p-3 rounded-lg bg-white/10 text-white border border-white/30 focus:border-yellow-400 focus:outline-none">
-          <option>Dog</option>
-          <option>Cat</option>
-          <option>Bird</option>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass rounded-xl p-6 border border-white/20"><div class="text-4xl">🐶</div><div class="mt-2 font-semibold">Nani</div><div class="text-white/60 text-sm">Forever in our hearts</div></div>
+        <div class="glass rounded-xl p-6 border border-white/20"><div class="text-4xl">🐕‍🦺</div><div class="mt-2 font-semibold">Pincher</div><div class="text-white/60 text-sm">Guardian of our family</div></div>
+        <div class="glass rounded-xl p-6 border border-white/20"><div class="text-4xl">🦮</div><div class="mt-2 font-semibold">Luna</div><div class="text-white/60 text-sm">Best friend ever</div></div>
+      </div>
+    </section>
   </main>
+
+  <script>
+    // ---- Global State ----
+    const state = {
+      flow: null,              // 'lifetime' | 'resting'
+      template: null,          // 'playful' | ...
+      tierKey: null,           // 'basic' | 'premium' | 'deluxe' | ...
+      baseEth: 0,              // numeric ETH for selected package
+      service: null,           // 'self' | 'full'
+      feeEth: 0.01,            // full-service fee
+      ethUsd: 3000             // fallback USD rate
+    };
+
+    // Try to fetch live ETH→USD
+    fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
+      .then(r => r.json()).then(j => {
+        if (j && j.ethereum && j.ethereum.usd) {
+          state.ethUsd = j.ethereum.usd;
+          document.querySelectorAll('.usd').forEach(el => {
+            const card = el.closest('[data-price]');
+            if (card) { const eth = parseFloat(card.dataset.price); el.textContent = (eth * state.ethUsd).toFixed(0); }
+          });
+          updatePricingSummary();
+          updateCustomizationSummary();
+        }
+      }).catch(() => {});
+
+    // ---- Helpers ----
+    const $ = s => document.querySelector(s);
+    const show = id => document.querySelectorAll('main > section').forEach(sec => sec.id === id ? sec.classList.remove('hidden') : sec.classList.add('hidden'));
+    const fmt = n => Number(n).toFixed(2);
+
+    function updateTierUSDLabels(scope) {
+      scope.querySelectorAll('[data-price] .usd').forEach(el => {
+        const card = el.closest('[data-price]');
+        const eth = parseFloat(card.dataset.price);
+        el.textContent = (eth * state.ethUsd).toFixed(0);
+      });
+    }
+
+    function selectTemplate(button) {
+      const parent = button.parentElement; // grid container
+      parent.querySelectorAll('.tier-card').forEach(b => b.classList.remove('selected-tier'));
+      button.classList.add('selected-tier');
+      state.template = button.dataset.template;
+    }
+
+    function selectTier(button) {
+      const grid = button.parentElement; // grid of tiers
+      grid.querySelectorAll('.tier-card').forEach(b => b.classList.remove('selected-tier'));
+      button.classList.add('selected-tier');
+      state.tierKey = button.dataset.tier;
+      state.baseEth = parseFloat(button.dataset.price);
+      updatePricingSummary();
+      updateCustomizationSummary();
+      // enable continue button for current flow
+      if (state.flow === 'lifetime') $('#toServiceFromLifetime').disabled = false;
+      if (state.flow === 'resting')  $('#toServiceFromResting').disabled  = false;
+    }
+
+    function selectService(button) {
+      const grid = button.parentElement; // grid of service cards (two cols)
+      grid.querySelectorAll('.tier-card').forEach(b => b.classList.remove('selected-tier'));
+      button.classList.add('selected-tier');
+      state.service = button.dataset.service; // 'self' | 'full'
+      // Set CTA text
+      const cta = $('#serviceContinue');
+      if (state.service === 'self') {
+        cta.textContent = 'Mint Now (Web3) →';
+        cta.className = 'bg-gradient-to-r from-purple-500 to-purple-600 px-8 py-3 rounded-lg font-semibold text-lg hover:from-purple-400 hover:to-purple-500';
+      } else {
+        cta.textContent = 'Order Full Service →';
+        cta.className = 'bg-gradient-to-r from-green-500 to-green-600 px-8 py-3 rounded-lg font-semibold text-lg hover:from-green-400 hover:to-green-500';
+      }
+      cta.disabled = false;
+      updateCustomizationSummary();
+    }
+
+    function updatePricingSummary() {
+      $('#summaryPackage').textContent = state.tierKey ? prettyTier(state.tierKey) : '—';
+      $('#baseEth').textContent = state.baseEth ? fmt(state.baseEth) : '—';
+      $('#baseUsd').textContent = state.baseEth ? (state.baseEth * state.ethUsd).toFixed(0) : '—';
+      $('#feeUsd').textContent  = (state.feeEth * state.ethUsd).toFixed(0);
+      const selfEth = state.baseEth || 0;
+      const fullEth = (state.baseEth || 0) + state.feeEth;
+      $('#totalSelfEth').textContent = fmt(selfEth);
+      $('#totalSelfUsd').textContent = (selfEth * state.ethUsd).toFixed(0);
+      $('#totalFullEth').textContent = fmt(fullEth);
+      $('#totalFullUsd').textContent = (fullEth * state.ethUsd).toFixed(0);
+    }
+
+    function updateCustomizationSummary() {
+      $('#selFlow').textContent = state.flow ? (state.flow === 'lifetime' ? 'Lifetime Memories' : 'Resting Memorial') : '—';
+      $('#selTemplate').textContent = state.template || '—';
+      $('#selPackage').textContent = state.tierKey ? prettyTier(state.tierKey) : '—';
+      $('#selService').textContent = state.service === 'self' ? 'Self‑Service' : (state.service === 'full' ? 'Full Service' : '—');
+      const totalEth = state.service === 'full' ? (state.baseEth || 0) + state.feeEth : (state.baseEth || 0);
+      $('#selTotalEth').textContent = fmt(totalEth);
+      $('#selTotalUsd').textContent = (totalEth * state.ethUsd).toFixed(0);
+      // title + form switch
+      const title = $('#customizationTitle');
+      const fullForm = $('#fullServiceForm');
+      const cta = $('#finalCta');
+      if (state.service === 'self') {
+        title.textContent = 'Finalize & Mint';
+        fullForm.classList.add('hidden');
+        cta.textContent = 'Mint Now (Demo)';
+      } else {
+        title.textContent = 'Provide Details (Full Service)';
+        fullForm.classList.remove('hidden');
+        cta.textContent = 'Place Full‑Service Order';
+      }
+    }
+
+    const prettyTier = k => ({ basic:'Basic Memory', premium:'Premium Memory', deluxe:'Deluxe Memory', simple:'Simple Memorial', complete:'Complete Memorial', legacy:'Legacy Memorial' }[k] || k);
+
+    // ---- Navigation ----
+    function showHome(){ show('homeView'); }
+    function showLifetime(){ state.flow = 'lifetime'; show('lifetimeView'); }
+    function showResting(){ state.flow = 'resting'; show('restingView'); }
+    function showService(){ show('serviceSelectionView'); updatePricingSummary(); }
+    function showCustomization(){ show('customizationView'); updateCustomizationSummary(); }
+    function showGallery(){ show('galleryView'); }
+
+    // ---- Event Wiring ----
+    // Header
+    $('#logoBtn').addEventListener('click', showHome);
+    $('#galleryBtn').addEventListener('click', showGallery);
+    $('#connectBtn').addEventListener('click', () => alert('Connect wallet (demo).'));
+
+    // Home
+    $('#lifetimeBtn').addEventListener('click', showLifetime);
+    $('#restingBtn').addEventListener('click', showResting);
+
+    // Back buttons
+    $('#backFromLifetime').addEventListener('click', showHome);
+    $('#backFromResting').addEventListener('click', showHome);
+    $('#backFromService').addEventListener('click', () => state.flow === 'lifetime' ? showLifetime() : showResting());
+    $('#backFromCustomization').addEventListener('click', showService);
+    $('#backFromGallery').addEventListener('click', showHome);
+
+    // Template selections (delegate)
+    document.querySelectorAll('#lifetimeView [data-template], #restingView [data-template]').forEach(btn => {
+      btn.addEventListener('click', () => selectTemplate(btn));
+    });
+
+    // Tier selections
+    document.querySelectorAll('#lifetimeView [data-tier], #restingView [data-tier]').forEach(btn => {
+      btn.addEventListener('click', () => selectTier(btn));
+    });
+
+    // Update USD placeholders once initially
+    updateTierUSDLabels(document);
+
+    // Continue to service selection
+    $('#toServiceFromLifetime').addEventListener('click', showService);
+    $('#toServiceFromResting').addEventListener('click', showService);
+
+    // Service selection cards
+    document.querySelectorAll('#serviceSelectionView [data-service]').forEach(btn => {
+      btn.addEventListener('click', () => selectService(btn));
+    });
+
+    // Continue from service to customization
+    $('#serviceContinue').addEventListener('click', showCustomization);
+
+    // Final CTA actions
+    $('#finalCta').addEventListener('click', () => {
+      if (!state.baseEth || !state.tierKey) { alert('Please choose a package first.'); return; }
+      const petName = $('#petName').value.trim();
+      if (!petName) { alert('Please enter your pet\'s name.'); return; }
+      if (state.service === 'self') {
+        alert(`(Demo) Would mint now on ${$('#networkSelect').value}.\n\nPet: ${petName}\nPackage: ${prettyTier(state.tierKey)}\nTotal: ${fmt(state.baseEth)} ETH`);
+      } else {
+        const email = $('#contactEmail').value.trim();
+        if (!email) { alert('Please provide a contact email.'); return; }
+        alert(`(Demo) Full‑service order placed!\n\nWe\'ll email ${email} within 2–3 business days with your preview.`);
+        showHome();
+      }
+    });
+  </script>
 </body>
 </html>
