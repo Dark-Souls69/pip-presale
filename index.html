@@ -1,41 +1,300 @@
-{
-  "name": "paws-in-peace-memorial-app",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-    "ethers": "^6.7.0",
-    "lucide-react": "^0.263.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "homepage": "."
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paws in Peace Memorial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .glass {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+  
+  <!-- Safety Banner -->
+  <div class="w-full bg-black/50 text-white py-2 px-4 text-sm flex items-center gap-2">
+    <span class="opacity-90">🛡️ This is a <strong>public demo</strong>. Never share seed phrases. We will <strong>never DM</strong> you for money.</span>
+  </div>
+
+  <!-- Header -->
+  <header class="glass backdrop-blur-md bg-white/10 border-b border-white/15">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-purple-600 grid place-items-center text-2xl">🐾</div>
+        <div class="font-bold text-xl text-white">Paws in Peace Memorial</div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="px-3 py-2 rounded-lg bg-white/10 text-white border border-white/30 hover:bg-white/20">Learn</button>
+        <select class="px-3 py-2 rounded-lg bg-white/10 text-white border border-white/30">
+          <option>Arbitrum Sepolia (test)</option>
+          <option disabled>Arbitrum One (main)</option>
+        </select>
+        <button class="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white">
+          👛 Connect Wallet
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+    
+    <!-- Hero Section -->
+    <div class="glass rounded-2xl p-8 text-center border border-white/20 animate-float">
+      <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center text-2xl border border-white/30 mx-auto mb-4">🐾</div>
+      <h1 class="text-4xl font-extrabold text-white mb-2">Every Pet Deserves a Resting Place</h1>
+      <p class="text-white/85 text-lg mb-6">Mint a beautiful on-chain memorial. Photo, Video, or Animation. Powered by Arbitrum.</p>
+      <div class="flex gap-3 justify-center">
+        <button onclick="showCreateForm()" class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:from-yellow-300 hover:to-yellow-400 transition-all">
+          ➕ Create Memorial
+        </button>
+        <button onclick="showGallery()" class="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-semibold transition-all">
+          Explore Gallery
+        </button>
+      </div>
+      <div class="mt-6 text-sm text-white/70">Live networks: Arbitrum One & Arbitrum Sepolia</div>
+    </div>
+
+    <!-- Collections -->
+    <div class="space-y-6">
+      <h2 class="text-3xl font-bold text-white">Collections</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass rounded-xl p-6 border border-yellow-400/40">
+          <div class="text-yellow-300 text-sm mb-2">🏆 Founders Collection</div>
+          <h3 class="font-semibold text-white">Founders & Gold Editions</h3>
+          <p class="text-white/80 mt-1">Exclusive presale holder benefits with profit sharing.</p>
+        </div>
+        <div class="glass rounded-xl p-6 border border-white/20">
+          <div class="text-purple-200 text-sm mb-2">💎 Premium Collections</div>
+          <h3 class="font-semibold text-white">Silver • Diamond • Characters</h3>
+          <p class="text-white/80 mt-1">Beautiful premium memorial designs with enhanced features.</p>
+        </div>
+        <div class="glass rounded-xl p-6 border border-white/20">
+          <div class="text-blue-200 text-sm mb-2">✨ Standard Collections</div>
+          <h3 class="font-semibold text-white">Gemini 1–6 Series</h3>
+          <p class="text-white/80 mt-1">Accessible memorial NFTs for every beloved companion.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Memorials -->
+    <div class="space-y-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-3xl font-bold text-white">Recent Memorials</h2>
+        <button onclick="showGallery()" class="text-yellow-400 font-medium hover:text-yellow-300">View All ›</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="memorialGrid">
+        
+        <!-- Memorial Token 1 -->
+        <div class="glass rounded-xl border border-white/20 cursor-pointer transition-all hover:scale-105 hover:bg-white/15 p-4">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center text-white text-xl">🐾</div>
+            <div class="flex items-center gap-2">
+              <span class="text-yellow-300">👑</span>
+              <button class="text-white/60 hover:text-pink-300">❤️</button>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <h3 class="font-bold text-white text-lg">Nani</h3>
+            <p class="text-white/80 text-sm">Mixed Breed</p>
+            <p class="text-white/70 text-sm font-medium">May 15, 2020</p>
+            <div class="flex items-center gap-2">
+              <span class="text-xs px-2 py-1 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-white font-medium">Founders</span>
+              <span class="text-xs text-white/60">Photo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Memorial Token 2 -->
+        <div class="glass rounded-xl border border-white/20 cursor-pointer transition-all hover:scale-105 hover:bg-white/15 p-4">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full flex items-center justify-center text-white text-xl">🐕‍🦺</div>
+            <div class="flex items-center gap-2">
+              <span class="text-yellow-400">⭐</span>
+              <button class="text-white/60 hover:text-pink-300">❤️</button>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <h3 class="font-bold text-white text-lg">Pincher</h3>
+            <p class="text-white/80 text-sm">Doberman</p>
+            <p class="text-white/70 text-sm font-medium">2018 - 2024</p>
+            <div class="flex items-center gap-2">
+              <span class="text-xs px-2 py-1 rounded-full bg-gradient-to-r from-yellow-300 to-yellow-500 text-white font-medium">Gold</span>
+              <span class="text-xs text-white/60">Video</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Memorial Token 3 -->
+        <div class="glass rounded-xl border border-white/20 cursor-pointer transition-all hover:scale-105 hover:bg-white/15 p-4">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-gray-300 to-gray-500 rounded-full flex items-center justify-center text-white text-xl">🦮</div>
+            <div class="flex items-center gap-2">
+              <span class="text-gray-300">🏅</span>
+              <button class="text-white/60 hover:text-pink-300">❤️</button>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <h3 class="font-bold text-white text-lg">Luna</h3>
+            <p class="text-white/80 text-sm">Golden Retriever</p>
+            <p class="text-white/70 text-sm font-medium">2015 - 2024</p>
+            <div class="flex items-center gap-2">
+              <span class="text-xs px-2 py-1 rounded-full bg-gradient-to-r from-gray-300 to-gray-500 text-white font-medium">Silver</span>
+              <span class="text-xs text-white/60">Photo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Memorial Token 4 -->
+        <div class="glass rounded-xl border border-white/20 cursor-pointer transition-all hover:scale-105 hover:bg-white/15 p-4">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-200 to-purple-400 rounded-full flex items-center justify-center text-white text-xl">💎</div>
+            <div class="flex items-center gap-2">
+              <span class="text-purple-300">✨</span>
+              <button class="text-white/60 hover:text-pink-300">❤️</button>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <h3 class="font-bold text-white text-lg">Princess</h3>
+            <p class="text-white/80 text-sm">Persian Cat</p>
+            <p class="text-white/70 text-sm font-medium">2020 - 2024</p>
+            <div class="flex items-center gap-2">
+              <span class="text-xs px-2 py-1 rounded-full bg-gradient-to-r from-purple-200 to-purple-400 text-white font-medium">Diamond</span>
+              <span class="text-xs text-white/60">Animation</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-6">
+      <div class="glass rounded-xl p-6 text-center border border-white/20">
+        <div class="text-3xl font-bold text-yellow-400 mb-1">5T</div>
+        <div class="text-sm text-white/80">Total $PIP Supply</div>
+      </div>
+      <div class="glass rounded-xl p-6 text-center border border-white/20">
+        <div class="text-3xl font-bold text-purple-300 mb-1">$20M</div>
+        <div class="text-sm text-white/80">Presale Hard Cap</div>
+      </div>
+      <div class="glass rounded-xl p-6 text-center border border-white/20">
+        <div class="text-3xl font-bold text-blue-300 mb-1">10%</div>
+        <div class="text-sm text-white/80">Holder Benefit</div>
+      </div>
+    </div>
+
+    <!-- Create Memorial Form (Hidden by default) -->
+    <div id="createForm" class="hidden space-y-6">
+      <div class="flex items-center justify-between">
+        <button onclick="showHome()" class="flex items-center gap-2 text-white/80 hover:text-white">‹ Back to Home</button>
+        <h2 class="text-3xl font-bold text-white">Create Your Memorial</h2>
+      </div>
+      <div class="glass rounded-2xl p-8 border border-white/20">
+        <div class="space-y-6">
+          <div class="grid md:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="block text-sm mb-2 text-white">Pet Name *</span>
+              <input class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-white/60 border border-white/30 focus:border-yellow-400 focus:outline-none" placeholder="Enter your pet's name">
+            </label>
+            <label class="block">
+              <span class="block text-sm mb-2 text-white">Memorial Date</span>
+              <input type="date" class="w-full p-3 rounded-lg bg-white/10 text-white border border-white/30 focus:border-yellow-400 focus:outline-none">
+            </label>
+          </div>
+          <label class="block">
+            <span class="block text-sm mb-2 text-white">Memorial Message</span>
+            <textarea class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-white/60 border border-white/30 focus:border-yellow-400 focus:outline-none h-24" placeholder="Share a loving memory or tribute..."></textarea>
+          </label>
+          <div class="grid md:grid-cols-3 gap-4">
+            <label class="block">
+              <span class="block text-sm mb-2 text-white">Media Type</span>
+              <select class="w-full p-3 rounded-lg bg-white/10 text-white border border-white/30 focus:border-yellow-400 focus:outline-none">
+                <option>Photo (0.016 ETH)</option>
+                <option>Video (0.024 ETH)</option>
+                <option>Animation (0.032 ETH)</option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="block text-sm mb-2 text-white">Media URL (Optional)</span>
+              <input class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-white/60 border border-white/30 focus:border-yellow-400 focus:outline-none" placeholder="https://... or ipfs://...">
+            </label>
+            <label class="block">
+              <span class="block text-sm mb-2 text-white">Collection Style</span>
+              <select class="w-full p-3 rounded-lg bg-white/10 text-white border border-white/30 focus:border-yellow-400 focus:outline-none">
+                <option>Founders</option>
+                <option>Gold</option>
+                <option>Silver</option>
+                <option>Diamond</option>
+                <option>Gemini</option>
+              </select>
+            </label>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4 border border-white/10">
+            <div class="text-sm text-white/90 mb-1"><strong>Demo Mode:</strong> This is a preview of the Paws in Peace memorial platform.</div>
+            <div class="text-xs text-white/70">Current tokenomics: launch $0.00004 • presale cap $20M • physical centers + holder profit share.</div>
+          </div>
+          <div class="flex items-center justify-between mt-8 pt-6 border-t border-white/20">
+            <div class="text-sm text-white/80">Network: Arbitrum Sepolia • Price: 0.016 ETH</div>
+            <button onclick="handleMint()" class="px-6 py-3 rounded-lg bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-semibold hover:opacity-90 transition-all">
+              Create Memorial
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learn Section -->
+    <div class="glass rounded-xl p-6 border border-white/20">
+      <h3 class="text-white font-semibold text-xl mb-2">Learn • Education Hub</h3>
+      <p class="text-white/80 text-sm">Beginner-friendly guides and videos on wallets, minting, and sharing memorial NFTs on Arbitrum.</p>
+    </div>
+
+  </main>
+
+  <script>
+    function showHome() {
+      document.getElementById('createForm').classList.add('hidden');
+      document.getElementById('memorialGrid').parentElement.classList.remove('hidden');
+      document.querySelector('main > div:first-child').classList.remove('hidden'); // Hero
+      document.querySelector('main > div:nth-child(2)').classList.remove('hidden'); // Collections
+      document.querySelector('main > div:nth-child(4)').classList.remove('hidden'); // Stats
+      document.querySelector('main > div:last-child').classList.remove('hidden'); // Learn
+    }
+
+    function showCreateForm() {
+      document.getElementById('createForm').classList.remove('hidden');
+      document.getElementById('memorialGrid').parentElement.classList.add('hidden');
+      document.querySelector('main > div:first-child').classList.add('hidden'); // Hero
+      document.querySelector('main > div:nth-child(2)').classList.add('hidden'); // Collections
+      document.querySelector('main > div:nth-child(4)').classList.add('hidden'); // Stats
+      document.querySelector('main > div:last-child').classList.add('hidden'); // Learn
+    }
+
+    function showGallery() {
+      alert('Gallery view would show all memorial tokens in a grid layout.');
+    }
+
+    function handleMint() {
+      const petName = document.querySelector('input[placeholder="Enter your pet\'s name"]').value;
+      if (!petName.trim()) {
+        alert('Please enter a pet name.');
+        return;
+      }
+      alert(`Memorial for ${petName} created successfully! (DEMO)\n\nThis public demo does not perform real blockchain transactions.`);
+    }
+  </script>
+
+</body>
+</html>
