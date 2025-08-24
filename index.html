@@ -23,7 +23,24 @@
 
   <script type="text/babel">
     const { useState, useMemo, useEffect, useCallback } = React;
-    const { Heart, Plus, Star, Calendar, Share2, Camera, Crown, Award, Sparkles, ChevronRight, ArrowLeft, Wallet, Info } = lucideReact;
+    // Safer lucide import with fallbacks (prevents blank screen if CDN blocks)
+const FallbackIcon = (ch) => (props) => React.createElement('span', {role:'img','aria-label':'icon', ...props}, ch);
+const LUCIDE = (window.lucideReact || {});
+const {
+  Heart = FallbackIcon('❤'),
+  Plus = FallbackIcon('+'),
+  Star = FallbackIcon('★'),
+  Calendar = FallbackIcon('📅'),
+  Share2 = FallbackIcon('🔗'),
+  Camera = FallbackIcon('📷'),
+  Crown = FallbackIcon('👑'),
+  Award = FallbackIcon('🏅'),
+  Sparkles = FallbackIcon('✨'),
+  ChevronRight = FallbackIcon('›'),
+  ArrowLeft = FallbackIcon('‹'),
+  Wallet = FallbackIcon('👛'),
+  Info = FallbackIcon('ℹ️')
+} = LUCIDE;
 
     /** ****************************
      *  SAFETY / CONFIG GUARDS
@@ -499,7 +516,15 @@
       );
 
       const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(<AppShell />);
+      try {
+  root.render(<AppShell />);
+} catch (e) {
+  console.error(e);
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:#1f2937;color:#fff;padding:16px;z-index:99999;overflow:auto;font:14px/1.4 system-ui';
+  overlay.innerHTML = `<h2 style="margin:0 0 8px">Runtime Error</h2><pre style="white-space:pre-wrap">${e && (e.stack || e.message || e)}</pre>`;
+  document.body.appendChild(overlay);
+}
     </script>
 </body>
 </html>
